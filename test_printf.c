@@ -6,7 +6,7 @@
 /*   By: chermist <chermist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/04 00:00:09 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/04 19:10:13 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int		main(void)
 
 	ft_putstr("\nOUR printf:");
 
-	ft_putnbr(ft_printf("\nПривет%c \\%s \n%x %X %o \n %d * %d = %d\\"
-			"☺️ Как дела%c%c", 46, st, 123, 123, 123, 5, 6, 5*6, 63, 10));
+	ft_putnbr(ft_printf("\nПривет%c \\%s %d * %d = %d\\"
+			"☺️ Как дела%c%c", 46, st, 5, 6, 5*6, 63, 10));
 	
 	ft_putstr("\nLIBC printf:");
 	
-	ft_putnbr(printf("\nПривет%c \\%s \n%x %X %o \n %d * %d = %d\\"
-			"☺️ Как дела%c%c", 46, st, 123, 123, 123, 5, 6, 5*6, 63, 10));
+	ft_putnbr(printf("\nПривет%c \\%s %d * %d = %d\\"
+			"☺️ Как дела%c%c", 46, st, 5, 6, 5*6, 63, 10));
 	ft_printf("\nпривет");
 }
