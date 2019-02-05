@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <chermist@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/04 23:16:13 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/05 23:52:15 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <stdarg.h>
 #include "../includes/ft_printf.h"
@@ -18,6 +19,8 @@ int		count_num(int i)
 	static int	count = 0;
 
 	count = 0;
+	if ((i < 0) && (i *= -1))
+		count++;
 	if (i / 10 < 1)
 		return (++count);
 	count_num(i / 10);
@@ -44,35 +47,36 @@ int		convert(unsigned int num, int base, int x)
 	return (ft_putstr(ptr));
 }
 
-char	*parse_modifier(char *str, t_mdfrs mods)
+char	*parse_modifier(char *str, t_mdfrs *mods)
 {
 	int j;
 
 	j = 0;
-	mods.width = 0;
-	while (FLAGS(*str) && (j < 5) && (mods.flag[j + 1] = 0))
-		mods.flag[j++] = *str++;
+	mods->width = 0;
+	while (FLAGS(*str) && (j < 5) && !(mods->flag[j + 1] = 0))
+		mods->flag[j++] = *str++;
 	while (ft_isdigit(*str))
-		mods.width = (mods.width * 10) + (*str++ - '0');
+		mods->width = (mods->width * 10) + (*str++ - '0');
 	if (*str == '.')
 		while (ft_isdigit(*++str))
-			mods.precision = (mods.precision * 10) + (*str - '0');
+			mods->precision = (mods->precision * 10) + (*str - '0');
 	if (MDFR(*str))
 	{
 		if (*str == 'l' && (*(str + 1) == 'l') && (str += 2))
-			mods.modifier = "ll";
+			mods->modifier = "ll";
 		else if (*str == 'h' && (*(str + 1) == 'h') && (str += 2))
-			mods.modifier = "hh";
+			mods->modifier = "hh";
 		else
 		{
-			mods.modifier[0] = *str++;
-			mods.modifier[1] = 0;
+			mods->modifier[0] = *str++;
+			mods->modifier[1] = 0;
 		}
 	}
+	mods->spec = *str;
 	return (str);
 }
 
-size_t	spec_exe(char *spec, va_list ap)
+size_t	spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 {
 	int		i;
 
@@ -81,14 +85,16 @@ size_t	spec_exe(char *spec, va_list ap)
 		PF_CHAR(va_arg(ap, int));
 	if (*spec == 'd' || *spec == 'i')
 		PF_NBR(va_arg(ap, int));
+	if (*spec == 'f' || *spec == 'F')
+		PF_DBL(va_arg(ap, double))
 	if (*spec == 's')
 		PF_STR(va_arg(ap, char*));
 	if (*spec == 'x')
-		return (convert(va_arg(ap, int), 16, 1));
+		return (mods->c_num = convert(va_arg(ap, int), 16, 1));
 	if (*spec == 'X')
-		return (convert(va_arg(ap, int), 16, 0));
+		return (mods->c_num = convert(va_arg(ap, int), 16, 0));
 	if (*spec == 'o')
-		return (convert(va_arg(ap, int), 8, 1));
+		return (mods->c_num = convert(va_arg(ap, int), 8, 1));
 	return (0);
 }
 
@@ -113,8 +119,8 @@ size_t	parse(const char *format, va_list ap)
 		}
 		str++;
 		if (!SPCFR(*str))
-			str = parse_modifier(str, mods);
-		i += spec_exe(str, ap);
+			str = parse_modifier(str, &mods);
+		i += spec_exe(str, ap, &mods);
 		str++;
 	}
 	return (i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/01 23:19:51 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/04 23:16:15 by chermist         ###   ########.fr       */
+/*   Created: 2019/01/31 19:16:57 by lkarlon-          #+#    #+#             */
+/*   Updated: 2019/02/05 23:52:09 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,15 @@
 # include <stdarg.h>
 # include "ft_sup.h"
 
-typedef struct	s_mdfrs
-{
-	char	flag[6];
-	char	*modifier;
-	int		width;
-	int		precision;
-}				t_mdfrs;
+
 
 # define PF_CHAR(x) {ft_putchar(x); return(1);}
-# define PF_NBR(x) {i = x; ft_putnbr(i); return(count_num(i));}
-# define PF_STR(x) {return(ft_putstr(x));}
+# define PF_NBR(x) {i = x; mods->c_num = count_num(i); \
+					pf_putnbr(i, mods); return (mods->c_num);}
+# define PF_STR(x) {return (ft_putstr(x));}
+# define PF_DBL(x) {return (pf_putdouble((double)x));}
 # define SPCFR(x) (ft_strchr("diouxXfeEcspaAgG", x) != NULL)
-# define FLAGS(x) (ft_strchr("-+ '#0", x) != NULL)
+# define FLAGS(x) (ft_strchr("-+ #0", x) != NULL)
 # define MDFR(x) (ft_strchr("lLhjz", x) != NULL)
 
 #endif
