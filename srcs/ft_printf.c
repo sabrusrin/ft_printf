@@ -6,7 +6,7 @@
 /*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/05 23:52:15 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/07 02:17:22 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@ char	*parse_modifier(char *str, t_mdfrs *mods)
 		mods->flag[j++] = *str++;
 	while (ft_isdigit(*str))
 		mods->width = (mods->width * 10) + (*str++ - '0');
-	if (*str == '.')
+	if (*str == '.' && (mods->preci-- && ft_isdigit(*(str + 1)) ?
+				!(mods->preci = 0) : !(*str++)))
 		while (ft_isdigit(*++str))
-			mods->precision = (mods->precision * 10) + (*str - '0');
+			mods->preci = (mods->preci * 10) + (*str - '0');
 	if (MDFR(*str))
 	{
 		if (*str == 'l' && (*(str + 1) == 'l') && (str += 2))
@@ -105,10 +106,11 @@ size_t	parse(const char *format, va_list ap)
 	t_mdfrs mods;
 
 	str = (char*)format;
-	mods.precision = 0;
 	i = 0;
 	while (*str != '\0')
 	{
+		mods.preci = -1;
+		mods.flag[0] = 0;
 		while (*str != '%')
 		{
 			ft_putchar(*str);

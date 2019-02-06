@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft.c                                               :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/06 18:52:21 by chermist         ###   ########.fr       */
+/*   Created: 2019/02/06 18:32:56 by chermist          #+#    #+#             */
+/*   Updated: 2019/02/06 20:32:59 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_sup.h"
+#include <unistd.h>
+#include <stdio.h>
 
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char*)s);
-		s++;
-	}
-	if ((char)c == '\0')
-		return ((char*)s);
-	return (NULL);
 }
 
 int		ft_putstr(char const *s)
@@ -63,7 +51,23 @@ void	ft_putnbr(int n)
 	ft_putchar((n % 10) + '0');
 }
 
-int		ft_isdigit(int c)
+int		main(void)
 {
-	return (c >= '0' && c <= '9');
+	float	f;
+	float	fpart;
+	int		ipart;
+	int		tmp;
+
+	f = 3.141592;
+	//printf("%d\n", (int)f);
+	ipart = (int)f;
+
+	ft_putnbr(ipart);
+	write(1, "\n", 1);
+	
+	fpart = f - (float)ipart;
+	printf("%f\n", fpart);
+	ft_putnbr(ipart);
+	write(1, "\n", 1);
+	return (0);
 }
