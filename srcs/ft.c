@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/04 23:16:10 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/06 18:52:21 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_sup.h"
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -23,6 +28,18 @@ char	*ft_strchr(const char *s, int c)
 	if ((char)c == '\0')
 		return ((char*)s);
 	return (NULL);
+}
+
+int		ft_putstr(char const *s)
+{
+	int count;
+
+	count = 0;
+	if (!s)
+		return (0);
+	while (*s && ++count)
+		ft_putchar(*s++);
+	return (count);
 }
 
 void	ft_putnbr(int n)
@@ -49,21 +66,4 @@ void	ft_putnbr(int n)
 int		ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
-}
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-int		ft_putstr(char const *s)
-{
-	int count;
-
-	count = 0;
-	if (!s)
-		return (0);
-	while (*s && ++count)
-		ft_putchar(*s++);
-	return (count);
 }
