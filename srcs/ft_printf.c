@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/07 17:39:35 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/08 01:46:43 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,6 @@ int		count_num(int i)
 	count_num(i / 10);
 	return (++count);
 }
-
-/* int		convert(unsigned int num, int base, int x)
-{
-	char	*int_list;
-	char	buffer[50];
-	char	*ptr;
-
-	if (x)
-		int_list = "0123456789abcdef";
-	else
-		int_list = "0123456789ABCDEF";
-	ptr = &buffer[49];
-	*ptr = '\0';
-	while (num != 0)
-	{
-		*--ptr = int_list[num % base];
-		num /= base;
-	}
-	return (ft_putstr(ptr));
-} */
 
 char	*parse_modifier(char *str, t_mdfrs *mods)
 {
@@ -85,18 +65,14 @@ size_t	spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 	if (*spec == 'c')
 		PF_CHAR(va_arg(ap, int));
 	if (*spec == 'd' || *spec == 'i')
-		PF_NBR(va_arg(ap, int));
+		pf_putnbr(va_arg(ap, int), mods);
 	if (*spec == 'f' || *spec == 'F')
-		PF_DBL(va_arg(ap, double))
+		pf_putdbl(va_arg(ap, double), mods);
 	if (*spec == 's')
-		PF_STR(va_arg(ap, char*));
-	if (*spec == 'x')
-		PF_BASE(va_arg(ap, int));
-	if (*spec == 'X')
-		PF_BASE(va_arg(ap, int));
-	if (*spec == 'o')
-		PF_BASE(va_arg(ap, int));
-	return (0);
+		mods->c_num = ft_putstr(va_arg(ap, char*));
+	if (*spec == 'x' || *spec == 'X' || *spec == 'o')
+		pf_base(va_arg(ap, int), mods);
+	return (mods->c_num);
 }
 
 size_t	parse(const char *format, va_list ap)
