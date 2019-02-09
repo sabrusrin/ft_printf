@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/08 01:18:51 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/08 03:01:07 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		ft_putstr(char const *s);
 void	ft_putchar(char c);
 
 # define P_PRECI {dpart = dpart * ft_pow(10, m->preci + 1); \
+		m->c_num += m->preci; \
 		dpart = (((int)dpart % 10) > 4) ? dpart / 10 + 1 : dpart / 10; \
 		ft_putnbr((int)dpart);}
 

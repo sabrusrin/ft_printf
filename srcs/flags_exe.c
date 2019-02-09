@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/08 01:46:35 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/08 03:32:56 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	pf_putdbl(double d, t_mdfrs *m)
 		(m->preci) == -1 ? (m->preci = 6) : 1;
 		P_PRECI;
 	}
-	((m->preci == -2) && ft_strchr(m->flag, '#')) ? ft_putchar('.') : 1;
+	((m->preci == -2) && ft_strchr(m->flag,'#')) ?ft_putchar('.') : 1;
 	do_width(m, 'L');
 }
 
