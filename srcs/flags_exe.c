@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/08 03:32:56 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/09 22:19:51 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	do_width(t_mdfrs *m, char f)
 	if (ft_strchr(m->flag, '0'))
 		fl = '0';
 	if ((f == 'R') && !(ft_strchr(m->flag, '-')) && (m->width))
-		while((m->width)-- > m->c_num && ++c)
+		while ((m->width)-- > m->c_num && ++c)
 			write(1, &fl, 1);
 	if ((f == 'L') && (fl != '0') && ft_strchr(m->flag, '-') && (m->width))
-		while((m->width)-- > m->c_num && ++c)
+		while ((m->width)-- > m->c_num && ++c)
 			write(1, &fl, 1);
 	m->c_num += c;
 }
@@ -54,16 +54,17 @@ void	do_hash(t_mdfrs *m, int f)
 void	pf_putnbr(int n, t_mdfrs *m)
 {
 	char	sign;
-	
+	int		f;
+
+	f = ft_strchr(m->flag, '+') ? 1 : 0;
 	sign = 0;
 	m->c_num = count_num(n);
 	if (ft_strchr(m->flag, '+') && (n > 0) && (sign = '+'))
 		(m->c_num)++;
-	else if (ft_strchr(m->flag, '+') && (n > 0) && (sign = ' '))
+	else if (ft_strchr(m->flag, ' ') && (n > 0) && (sign = ' '))
 		(m->c_num)++;
 	do_width(m, 'R');
-	if (sign)
-		write(1, &sign, 1);
+	(sign) ? write(1, &sign, 1) : 1;
 	ft_putnbr(n);
 	do_width(m, 'L');
 }
@@ -71,24 +72,31 @@ void	pf_putnbr(int n, t_mdfrs *m)
 void	pf_putdbl(double d, t_mdfrs *m)
 {
 	double	dpart;
-	int		ipart;
-	int		i;
+	long	ip;
+	char	sign;
+	int		pr;
 
-	ipart = (int)d;
-	i = count_num(ipart);
-	dpart = d - (double)ipart;
-	if (m->preci && (m->preci != -2))
-		m->c_num = m->preci + 1 + i;
-	else if ((m->preci == -2) && ft_strchr(m->flag, '#'))
-		m->c_num = i + 1;
+	sign = 0;
+	pr = m->preci;
+	ip = (long)(d < 0) ? -d : d;
+	m->c_num = count_num(ip) + ((d < 0) ? 1 : 0);
+	dpart = ((d < 0) ? -d : d) - ip;
+	if (ft_strchr(m->flag, '+') && (d > 0) && (sign = '+'))
+		(m->c_num)++;
+	else if (ft_strchr(m->flag, ' ') && (d > 0) && (sign = ' '))
+		(m->c_num)++;
+	if (pr && (pr != -2) && ((pr) == -1 ? (pr = 6) : 1))
+		m->c_num += pr + 1;
+	else if ((pr == -2 || pr == 0) && ft_strchr(m->flag, '#'))
+		m->c_num++;
+	(ft_strchr(m->flag, '0') && d < 0) ? ft_putchar('-') : 1;
+	(ft_strchr(m->flag, '0') && sign) ? ft_putchar(sign) : 1;
 	do_width(m, 'R');
-	ft_putnbr(ipart);
-	if (m->preci && (m->preci != -2) && write(1, ".", 1))
-	{
-		(m->preci) == -1 ? (m->preci = 6) : 1;
+	(!ft_strchr(m->flag, '0') && sign) ? ft_putchar(sign) : 1;
+	(!ft_strchr(m->flag, '0') && d < 0) ? ft_putnbr(-ip) : ft_putnbr(ip);
+	if (pr && (pr != -2) && write(1, ".", 1))
 		P_PRECI;
-	}
-	((m->preci == -2) && ft_strchr(m->flag,'#')) ?ft_putchar('.') : 1;
+	((pr == -2 || pr == 0) && ft_strchr(m->flag, '#')) ? ft_putchar('.') : 1;
 	do_width(m, 'L');
 }
 
