@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/09 16:35:29 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/10 20:03:01 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,27 @@
 typedef struct	s_mdfrs
 {
 	char	flag[6];
-	char	*modifier;
+	char	modifier[2];
 	int		width;
-	int		preci;
+	int		pr;
 	char	spec;
 	int		c_num;
 }				t_mdfrs;
 
+void	pf_putchar(char c, t_mdfrs *m);
+void	pf_putstr(char	*s, t_mdfrs *m);
+void	pf_putnbr(long long n, t_mdfrs *m);
+void	pf_putdbl(long double d, t_mdfrs *m);
+void	pf_base(unsigned long long num, t_mdfrs *m);
+double	ft_pow(double d, int pow);
+void	do_width(t_mdfrs *m, char f);
+void	do_hash(t_mdfrs *m, int f);
+void	do_preci(t_mdfrs *m, long double dpart);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strchr(const char *s, int c);
-void	pf_putnbr(int n, t_mdfrs *m);
-void	pf_putdbl(double d, t_mdfrs *m);
-void	pf_base(unsigned int num, t_mdfrs *m);
-void	ft_putnbr(int n);
+void	ft_putnbr(long long n);
 int		ft_isdigit(int c);
 int		ft_putstr(char const *s);
 void	ft_putchar(char c);
-
-# define P_PRECI {dpart = dpart * ft_pow(10, pr + 1); \
-		dpart = (((int)dpart % 10) > 4) ? dpart / 10 + 1 : dpart / 10; \
-		ft_putnbr((int)dpart);}
 
 #endif

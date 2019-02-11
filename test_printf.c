@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/09 21:58:58 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/10 23:12:57 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		main(void)
 	//float t = 3.14;
 	 //short int		s = 23458;
 
-	ft_putnbr(printf("F%#8.2f   %8d  %s %#X %#o \n", 3.1435333345, 5675,  "Привет мир😊 ", 123, 123));
+	//ft_putnbr(printf("F%#8.2f   %8d  %s %#X %#o \n", 3.1435333345, 5675,  "Привет мир😊 ", 123, 123));
 
 	ft_putstr("\nOUR printf:");
 
@@ -42,4 +42,14 @@ int		main(void)
 	ft_putnbr(ft_printf("\nnum: %.f, |%  #.f, %+f, %.2f, %#.0f\n", 3.1415, 3.1415, -3.1415, 3.1415, 3.1415));
 	ft_putnbr(printf("\nnum: %.f, |%  #.f, %+f, %.2f, %#.0f\n", 3.1415, 3.1415, -3.1415, 3.1415, 3.1415));
 	ft_printf("\n!!!!num: %x, %o", 123, 123);
+
+	ft_putnbr(ft_printf("\n%c, |%05c|, |%-05c|\n", 65, 65, 65));
+	ft_putnbr(printf("\n%c, |%05c|, |%-05c|\n", 65, 65, 65));
+
+
+	ft_printf("\n");
+	ft_printf("\n%s is a string", NULL);
+	printf("\n%s is a string", NULL);
+
+	//ft_printf("\n%p", &st);
 }

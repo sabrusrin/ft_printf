@@ -1,62 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flags_exe.c                                        :+:      :+:    :+:   */
+/*   spec_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/09 22:19:51 by chermist         ###   ########.fr       */
+/*   Created: 2019/02/10 16:52:49 by chermist          #+#    #+#             */
+/*   Updated: 2019/02/10 23:08:42 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../includes/ft_sup.h"
+#include "../../includes/ft_sup.h"
 
-double	ft_pow(double d, int pow)
+void	pf_putchar(char c, t_mdfrs *m)
 {
-	return (pow ? (d * ft_pow(d, pow - 1)) : 1);
+	m->c_num++;
+	do_width(m, 'R');
+	ft_putchar(c);
+	do_width(m, 'L');
 }
 
-void	do_width(t_mdfrs *m, char f)
+void	pf_putstr(char	*s, t_mdfrs *m)
 {
-	char	fl;
-	int		c;
+	char	*tmp;
 
-	c = 0;
-	fl = ' ';
-	if (ft_strchr(m->flag, '0'))
-		fl = '0';
-	if ((f == 'R') && !(ft_strchr(m->flag, '-')) && (m->width))
-		while ((m->width)-- > m->c_num && ++c)
-			write(1, &fl, 1);
-	if ((f == 'L') && (fl != '0') && ft_strchr(m->flag, '-') && (m->width))
-		while ((m->width)-- > m->c_num && ++c)
-			write(1, &fl, 1);
-	m->c_num += c;
-}
-
-void	do_hash(t_mdfrs *m, int f)
-{
-	if (!f && (m->spec == 'o'))
-		m->c_num++;
-	else if (!f && (m->spec == 'x' || m->spec == 'X'))
-		m->c_num += 2;
-	if ((f == 1) && (m->spec == 'x' || m->spec == 'X'))
+	tmp = s;
+	if ((s == NULL) ? (s = "(null)") : 0)
+		m->c_num = 6;
+	else if (*s)
 	{
-		ft_putchar('0');
-		ft_putchar(m->spec);
+		while (*tmp++)
+			m->c_num++;
+		if ((!m->pr || m->pr == -2) ? (m->pr = -2) : 0)
+			s = 0;
+		else if (m->pr > 0 && (m->pr < m->c_num))
+		{
+			tmp = malloc(m->pr + 1);
+			tmp[m->pr] = 0;
+			ft_memcpy(tmp, s, m->pr);
+			s = tmp;
+			m->c_num = m->pr;
+		}
 	}
-	else if ((f == 1) && m->spec == 'o')
-		ft_putchar('0');
+	do_width(m, 'R');
+	ft_putstr(s);
+	do_width(m, 'L');
+	(*s && m->pr > 0 && (m->pr < m->c_num)) ? free(tmp) : 1;
 }
 
-void	pf_putnbr(int n, t_mdfrs *m)
+void	pf_putnbr(long long n, t_mdfrs *m)
 {
 	char	sign;
-	int		f;
 
-	f = ft_strchr(m->flag, '+') ? 1 : 0;
 	sign = 0;
 	m->c_num = count_num(n);
 	if (ft_strchr(m->flag, '+') && (n > 0) && (sign = '+'))
@@ -69,15 +65,13 @@ void	pf_putnbr(int n, t_mdfrs *m)
 	do_width(m, 'L');
 }
 
-void	pf_putdbl(double d, t_mdfrs *m)
+void	pf_putdbl(long double d, t_mdfrs *m)
 {
-	double	dpart;
-	long	ip;
-	char	sign;
-	int		pr;
+	long double	dpart;
+	long		ip;
+	char		sign;
 
 	sign = 0;
-	pr = m->preci;
 	ip = (long)(d < 0) ? -d : d;
 	m->c_num = count_num(ip) + ((d < 0) ? 1 : 0);
 	dpart = ((d < 0) ? -d : d) - ip;
@@ -85,22 +79,22 @@ void	pf_putdbl(double d, t_mdfrs *m)
 		(m->c_num)++;
 	else if (ft_strchr(m->flag, ' ') && (d > 0) && (sign = ' '))
 		(m->c_num)++;
-	if (pr && (pr != -2) && ((pr) == -1 ? (pr = 6) : 1))
-		m->c_num += pr + 1;
-	else if ((pr == -2 || pr == 0) && ft_strchr(m->flag, '#'))
+	if (m->pr && (m->pr != -2) && ((m->pr) == -1 ? (m->pr = 6) : 1))
+		m->c_num += m->pr + 1;
+	else if ((m->pr == -2 || m->pr == 0) && ft_strchr(m->flag, '#'))
 		m->c_num++;
 	(ft_strchr(m->flag, '0') && d < 0) ? ft_putchar('-') : 1;
 	(ft_strchr(m->flag, '0') && sign) ? ft_putchar(sign) : 1;
 	do_width(m, 'R');
 	(!ft_strchr(m->flag, '0') && sign) ? ft_putchar(sign) : 1;
 	(!ft_strchr(m->flag, '0') && d < 0) ? ft_putnbr(-ip) : ft_putnbr(ip);
-	if (pr && (pr != -2) && write(1, ".", 1))
-		P_PRECI;
-	((pr == -2 || pr == 0) && ft_strchr(m->flag, '#')) ? ft_putchar('.') : 1;
+	if (m->pr && (m->pr != -2) && write(1, ".", 1))
+		do_preci(m, dpart);
+	((m->pr == -2 || !m->pr) && ft_strchr(m->flag, '#')) ? ft_putchar('.') : 1;
 	do_width(m, 'L');
 }
 
-void	pf_base(unsigned int num, t_mdfrs *m)
+void	pf_base(unsigned long long num, t_mdfrs *m)
 {
 	char	*int_list;
 	char	buffer[50];

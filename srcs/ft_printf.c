@@ -6,13 +6,27 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/09 22:01:09 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/10 20:03:06 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include <stdarg.h>
 #include "../includes/ft_printf.h"
+
+void	clean_mods(t_mdfrs *mods)
+{
+	int i;
+
+	i = -1;
+	while (++i < 6)
+		mods->flag[i] = 0;
+	mods->c_num = 0;
+	mods->modifier[0] = 0;
+	mods->modifier[1] = 0;
+	mods->width = 0;
+	mods->pr = -1;
+	mods->spec = 0;
+}
 
 int		count_num(int i)
 {
@@ -32,21 +46,20 @@ char	*parse_modifier(char *str, t_mdfrs *mods)
 	int j;
 
 	j = 0;
-	mods->width = 0;
 	while (FLAGS(*str) && (j < 5) && !(mods->flag[j + 1] = 0))
 		mods->flag[j++] = *str++;
 	while (ft_isdigit(*str))
 		mods->width = (mods->width * 10) + (*str++ - '0');
-	if (*str == '.' && (mods->preci-- && ft_isdigit(*(str + 1)) ?
-				!(mods->preci = 0) : !(*str++)))
+	if (*str == '.' && (mods->pr-- && ft_isdigit(*(str + 1)) ?
+				!(mods->pr = 0) : !(*str++)))
 		while (ft_isdigit(*++str))
-			mods->preci = (mods->preci * 10) + (*str - '0');
+			mods->pr = (mods->pr * 10) + (*str - '0');
 	if (MDFR(*str))
 	{
 		if (*str == 'l' && (*(str + 1) == 'l') && (str += 2))
-			mods->modifier = "ll";
+			ft_memcpy(mods->modifier, "ll", 2);
 		else if (*str == 'h' && (*(str + 1) == 'h') && (str += 2))
-			mods->modifier = "hh";
+			ft_memcpy(mods->modifier, "hh", 2);
 		else
 		{
 			mods->modifier[0] = *str++;
@@ -59,19 +72,26 @@ char	*parse_modifier(char *str, t_mdfrs *mods)
 
 size_t	spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 {
-	int		i;
-
-	i = 1;
 	if (*spec == 'c')
-		PF_CHAR(va_arg(ap, int));
+		pf_putchar(va_arg(ap, int), mods);
 	if (*spec == 'd' || *spec == 'i')
-		pf_putnbr(va_arg(ap, int), mods);
+		(mods->modifier[0] == 'l') ?
+		(pf_putnbr(va_arg(ap, long long int), mods)) :
+		(pf_putnbr(va_arg(ap, int), mods));
 	if (*spec == 'f' || *spec == 'F')
-		pf_putdbl(va_arg(ap, double), mods);
+		(mods->modifier[0] == 'L') ?
+		(pf_putdbl(va_arg(ap, long double), mods)) :
+		(pf_putdbl(va_arg(ap, double), mods));
 	if (*spec == 's')
-		mods->c_num = ft_putstr(va_arg(ap, char*));
+		pf_putstr(va_arg(ap, char*), mods);
 	if (*spec == 'x' || *spec == 'X' || *spec == 'o')
-		pf_base(va_arg(ap, int), mods);
+		(mods->modifier[0] == 'l' && mods->modifier[1] == 'l') ?
+		(pf_base(va_arg(ap, unsigned long long), mods)) :
+		(pf_base(va_arg(ap, int), mods));
+	if (*spec == '%')
+		pf_putchar('%', mods);
+	if (*spec == 'p' && write(1, "\npolundra\n", 11))
+		(pf_base(va_arg(ap, int), mods));
 	return (mods->c_num);
 }
 
@@ -85,13 +105,11 @@ size_t	parse(const char *format, va_list ap)
 	i = 0;
 	while (*str != '\0')
 	{
-		mods.preci = -1;
-		mods.flag[0] = 0;
 		mods.c_num = 0;
+		clean_mods(&mods);
 		while (*str != '%')
 		{
-			ft_putchar(*str);
-			str++;
+			ft_putchar(*str++);
 			i++;
 			if (!(*str))
 				return (i);
@@ -100,6 +118,7 @@ size_t	parse(const char *format, va_list ap)
 		if (!SPCFR(*str))
 			str = parse_modifier(str, &mods);
 		i += spec_exe(str, ap, &mods);
+		clean_mods(&mods);
 		str++;
 	}
 	return (i);
