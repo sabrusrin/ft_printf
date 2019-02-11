@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 16:52:49 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/10 23:08:42 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/12 01:09:54 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	pf_putchar(char c, t_mdfrs *m)
 	do_width(m, 'L');
 }
 
-void	pf_putstr(char	*s, t_mdfrs *m)
+void	pf_putstr(char *s, t_mdfrs *m)
 {
 	char	*tmp;
 
@@ -96,12 +96,12 @@ void	pf_putdbl(long double d, t_mdfrs *m)
 
 void	pf_base(unsigned long long num, t_mdfrs *m)
 {
-	char	*int_list;
-	char	buffer[50];
-	char	*ptr;
-	int		base;
+	char					*int_list;
+	char					buffer[50];
+	char					*ptr;
+	unsigned long long		base;
 
-	if (m->spec == 'X' || m->spec == 'x')
+	if (m->spec == 'X' || m->spec == 'x' || m->spec == 'p')
 		base = 16;
 	else if (m->spec == 'o')
 		base = 8;

@@ -6,40 +6,12 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/10 20:03:06 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/12 01:11:23 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include "../includes/ft_printf.h"
-
-void	clean_mods(t_mdfrs *mods)
-{
-	int i;
-
-	i = -1;
-	while (++i < 6)
-		mods->flag[i] = 0;
-	mods->c_num = 0;
-	mods->modifier[0] = 0;
-	mods->modifier[1] = 0;
-	mods->width = 0;
-	mods->pr = -1;
-	mods->spec = 0;
-}
-
-int		count_num(int i)
-{
-	static int	count = 0;
-
-	count = 0;
-	if ((i < 0) && (i *= -1))
-		count++;
-	if (i / 10 < 1)
-		return (++count);
-	count_num(i / 10);
-	return (++count);
-}
 
 char	*parse_modifier(char *str, t_mdfrs *mods)
 {
@@ -51,7 +23,7 @@ char	*parse_modifier(char *str, t_mdfrs *mods)
 	while (ft_isdigit(*str))
 		mods->width = (mods->width * 10) + (*str++ - '0');
 	if (*str == '.' && (mods->pr-- && ft_isdigit(*(str + 1)) ?
-				!(mods->pr = 0) : !(*str++)))
+		!(mods->pr = 0) : !(*str++)))
 		while (ft_isdigit(*++str))
 			mods->pr = (mods->pr * 10) + (*str - '0');
 	if (MDFR(*str))
@@ -90,8 +62,8 @@ size_t	spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 		(pf_base(va_arg(ap, int), mods));
 	if (*spec == '%')
 		pf_putchar('%', mods);
-	if (*spec == 'p' && write(1, "\npolundra\n", 11))
-		(pf_base(va_arg(ap, int), mods));
+	if (*spec == 'p' ? (mods->flag[0] = '#') : 0)
+		(pf_base(va_arg(ap, long int), mods));
 	return (mods->c_num);
 }
 
@@ -115,8 +87,7 @@ size_t	parse(const char *format, va_list ap)
 				return (i);
 		}
 		str++;
-		if (!SPCFR(*str))
-			str = parse_modifier(str, &mods);
+		str = parse_modifier(str, &mods);
 		i += spec_exe(str, ap, &mods);
 		clean_mods(&mods);
 		str++;

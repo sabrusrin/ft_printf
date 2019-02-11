@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/10 23:12:57 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/12 01:03:24 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_printf(const char *format, ...);
 int		main(void)
 {
 	char *st = "Umnozheniye串€";
-	//float t = 3.14;
+	float t = 3.14;
 	 //short int		s = 23458;
 
 	//ft_putnbr(printf("F%#8.2f   %8d  %s %#X %#o \n", 3.1435333345, 5675,  "Привет мир😊 ", 123, 123));
@@ -49,7 +49,10 @@ int		main(void)
 
 	ft_printf("\n");
 	ft_printf("\n%s is a string", NULL);
-	printf("\n%s is a string", NULL);
+//	printf("\n%s is a string", NULL);
 
 	//ft_printf("\n%p", &st);
+	ft_printf("\n|%x|", -42);
+	ft_printf("\n|%8p|", &t);
+	printf("\n|%8p|", &t);
 }

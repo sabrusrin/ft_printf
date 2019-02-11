@@ -6,12 +6,12 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/10 17:40:40 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/12 00:54:26 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../../includes/ft_sup.h"
+#include "../../includes/ft_printf.h"
 
 double	ft_pow(double d, int pow)
 {
@@ -42,9 +42,10 @@ void	do_hash(t_mdfrs *m, int f)
 {
 	if (!f && (m->spec == 'o'))
 		m->c_num++;
-	else if (!f && (m->spec == 'x' || m->spec == 'X'))
+	else if (!f && (m->spec == 'x' || m->spec == 'X' || m->spec == 'p'))
 		m->c_num += 2;
-	if ((f == 1) && (m->spec == 'x' || m->spec == 'X'))
+	if ((f == 1) && (m->spec == 'x' || m->spec == 'X' ||
+				((m->spec == 'p') ? (m->spec = 'x') : 0)))
 	{
 		ft_putchar('0');
 		ft_putchar(m->spec);
