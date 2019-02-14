@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/12 01:11:23 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/12 17:24:07 by lkarlon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include "../includes/ft_printf.h"
+#include <stdio.h>
 
 char	*parse_modifier(char *str, t_mdfrs *mods)
 {
@@ -50,6 +51,8 @@ size_t	spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 		(mods->modifier[0] == 'l') ?
 		(pf_putnbr(va_arg(ap, long long int), mods)) :
 		(pf_putnbr(va_arg(ap, int), mods));
+	if (*spec == 'u')
+		pf_putnbr(va_arg(ap, unsigned int), mods);
 	if (*spec == 'f' || *spec == 'F')
 		(mods->modifier[0] == 'L') ?
 		(pf_putdbl(va_arg(ap, long double), mods)) :
@@ -72,24 +75,25 @@ size_t	parse(const char *format, va_list ap)
 	char	*str;
 	size_t	i;
 	t_mdfrs mods;
+	int		*count;
 
 	str = (char*)format;
 	i = 0;
+	mods.c_num = 0;
 	while (*str != '\0')
 	{
-		mods.c_num = 0;
 		clean_mods(&mods);
-		while (*str != '%')
+		while (*str != '%' && ++i)
 		{
 			ft_putchar(*str++);
-			i++;
 			if (!(*str))
 				return (i);
 		}
 		str++;
 		str = parse_modifier(str, &mods);
+		if (*str == 'n' && (count = va_arg(ap, int*)))
+			*count = i;
 		i += spec_exe(str, ap, &mods);
-		clean_mods(&mods);
 		str++;
 	}
 	return (i);

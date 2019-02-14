@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spec_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 16:52:49 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/12 01:09:54 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/12 21:00:28 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ void	pf_putnbr(long long n, t_mdfrs *m)
 
 	sign = 0;
 	m->c_num = count_num(n);
-	if (ft_strchr(m->flag, '+') && (n > 0) && (sign = '+'))
+	if (m->spec != 'u' && ft_strchr(m->flag, '+') && (n > 0) && (sign = '+'))
 		(m->c_num)++;
-	else if (ft_strchr(m->flag, ' ') && (n > 0) && (sign = ' '))
+	else if (m->spec != 'u' && ft_strchr(m->flag, ' ') && (n > 0) && (sign = ' '))
 		(m->c_num)++;
-	do_width(m, 'R');
 	(sign) ? write(1, &sign, 1) : 1;
+	do_width(m, 'R');
 	ft_putnbr(n);
 	do_width(m, 'L');
 }
@@ -94,7 +94,7 @@ void	pf_putdbl(long double d, t_mdfrs *m)
 	do_width(m, 'L');
 }
 
-void	pf_base(unsigned long long num, t_mdfrs *m)
+void	pf_base(uintmax_t num, t_mdfrs *m)
 {
 	char					*int_list;
 	char					buffer[50];

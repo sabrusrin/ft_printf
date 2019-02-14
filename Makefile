@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chermist <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/04 20:03:10 by chermist          #+#    #+#              #
-#    Updated: 2019/02/12 01:18:25 by chermist         ###   ########.fr        #
+#    Updated: 2019/02/12 21:01:51 by chermist         ###   ########.fr        #
+#    Updated: 2019/02/12 18:47:09 by lkarlon-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME	= libft.a
+NAME	= libftprintf.a
 
 SRCS = ./srcs/ft_printf.c \
 		./srcs/libft/ft.c \
