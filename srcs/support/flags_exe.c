@@ -6,7 +6,7 @@
 /*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/12 18:41:15 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/16 21:37:16 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,21 @@ void	do_hash(t_mdfrs *m, int f)
 		ft_putchar('0');
 }
 
-void	do_preci(t_mdfrs *m, long double dpart)
+void	do_preci(t_mdfrs *m, long double dpart, char c)
 {
-	dpart = dpart * ft_pow(10, m->pr + 1);
-	dpart = (((long)dpart % 10) > 4) ? dpart / 10 + 1 : dpart / 10;
-	ft_putnbr((long)dpart);
+	int	i;
+
+	i = 0;
+	if (c == 'f')
+	{
+		dpart = dpart * ft_pow(10, m->pr + 1);
+		dpart = (((long)dpart % 10) > 4) ? dpart / 10 + 1 : dpart / 10;
+		ft_putnbr((long)dpart);
+	}
+	else if (c == 'o')
+	{
+		i = m->pr;
+		while (i--)
+			ft_putchar('0');
+	}
 }

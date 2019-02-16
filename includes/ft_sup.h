@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sup.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/12 21:00:00 by chermist         ###   ########.fr       */
+/*   Created: 2019/02/16 19:11:28 by chermist          #+#    #+#             */
+/*   Updated: 2019/02/16 20:51:06 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ void			pf_putstr(char	*s, t_mdfrs *m);
 void			pf_putnbr(long long n, t_mdfrs *m);
 void			pf_putdbl(long double d, t_mdfrs *m);
 void			pf_base(uintmax_t num, t_mdfrs *m);
+void			pf_base(uintmax_t num, t_mdfrs *m);
 double			ft_pow(double d, int pow);
 void			do_width(t_mdfrs *m, char f);
 void			do_hash(t_mdfrs *m, int f);
-void			do_preci(t_mdfrs *m, long double dpart);
+void			do_preci(t_mdfrs *m, long double dpart, char c);
 void			clean_mods(t_mdfrs *mods);
 int				count_num(long long i);
 void			*ft_memcpy(void *dst, const void *src, size_t n);

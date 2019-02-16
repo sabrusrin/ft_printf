@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spec_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/10 16:52:49 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/12 21:00:28 by chermist         ###   ########.fr       */
+/*   Created: 2019/02/16 19:10:04 by chermist          #+#    #+#             */
+/*   Updated: 2019/02/16 23:46:22 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	pf_putnbr(long long n, t_mdfrs *m)
 	m->c_num = count_num(n);
 	if (m->spec != 'u' && ft_strchr(m->flag, '+') && (n > 0) && (sign = '+'))
 		(m->c_num)++;
-	else if (m->spec != 'u' && ft_strchr(m->flag, ' ') && (n > 0) && (sign = ' '))
+	else if (m->spec != 'u' && ft_strchr(m->flag, ' ') &&
+			(n > 0) && (sign = ' '))
 		(m->c_num)++;
 	(sign) ? write(1, &sign, 1) : 1;
 	do_width(m, 'R');
@@ -89,7 +90,7 @@ void	pf_putdbl(long double d, t_mdfrs *m)
 	(!ft_strchr(m->flag, '0') && sign) ? ft_putchar(sign) : 1;
 	(!ft_strchr(m->flag, '0') && d < 0) ? ft_putnbr(-ip) : ft_putnbr(ip);
 	if (m->pr && (m->pr != -2) && write(1, ".", 1))
-		do_preci(m, dpart);
+		do_preci(m, dpart, 'f');
 	((m->pr == -2 || !m->pr) && ft_strchr(m->flag, '#')) ? ft_putchar('.') : 1;
 	do_width(m, 'L');
 }
@@ -99,12 +100,10 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 	char					*int_list;
 	char					buffer[50];
 	char					*ptr;
-	unsigned long long		base;
+	int						base;
 
-	if (m->spec == 'X' || m->spec == 'x' || m->spec == 'p')
-		base = 16;
-	else if (m->spec == 'o')
-		base = 8;
+	(m->spec == 'X' || m->spec == 'x' || m->spec == 'p') ? (base = 16) : 1;
+	(m->spec == 'o') ? (base = 8) : 1;
 	(m->spec == 'X') ? (int_list = "0123456789ABCDEF") :
 		(int_list = "0123456789abcdef");
 	ptr = &buffer[49];
@@ -113,9 +112,14 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 		ptr = "0";
 	while (num != 0 && ++m->c_num && (*--ptr = int_list[num % base]))
 		num /= base;
-	ft_strchr(m->flag, '#') ? do_hash(m, 0) : 1;
+	if ((m->pr == -2 || m->pr == 0) && *ptr == '0' && (ptr = ""))
+		m->c_num = 0;
+	(m->spec == 'o' && m->c_num < m->pr && (m->pr = m->pr - m->c_num)) ?
+		(m->c_num += m->pr) : 1;
+	(ft_strchr(m->flag, '#') && m->pr <= 0) ? do_hash(m, 0) : 1;
 	do_width(m, 'R');
-	ft_strchr(m->flag, '#') ? do_hash(m, 1) : 1;
+	(ft_strchr(m->flag, '#') && m->pr <= 0) ? do_hash(m, 1) : 1;
+	(m->spec == 'o' && m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	ft_putstr(ptr);
 	do_width(m, 'L');
 }

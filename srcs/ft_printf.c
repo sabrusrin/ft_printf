@@ -6,7 +6,7 @@
 /*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/12 17:24:07 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/16 23:48:00 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,14 @@ size_t	spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 	if (*spec == 'c')
 		pf_putchar(va_arg(ap, int), mods);
 	if (*spec == 'd' || *spec == 'i')
-		(mods->modifier[0] == 'l') ?
-		(pf_putnbr(va_arg(ap, long long int), mods)) :
-		(pf_putnbr(va_arg(ap, int), mods));
+	{
+		if (mods->modifier[0] == 'l' && mods->modifier[1] == 'l')
+			pf_putnbr(va_arg(ap, long long), mods);
+		else if (mods->modifier[0] == 'l')
+			pf_putnbr(va_arg(ap, long), mods);
+		else
+			pf_putnbr(va_arg(ap, int), mods);
+	}
 	if (*spec == 'u')
 		pf_putnbr(va_arg(ap, unsigned int), mods);
 	if (*spec == 'f' || *spec == 'F')
@@ -60,9 +65,14 @@ size_t	spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 	if (*spec == 's')
 		pf_putstr(va_arg(ap, char*), mods);
 	if (*spec == 'x' || *spec == 'X' || *spec == 'o')
-		(mods->modifier[0] == 'l' && mods->modifier[1] == 'l') ?
-		(pf_base(va_arg(ap, unsigned long long), mods)) :
-		(pf_base(va_arg(ap, int), mods));
+	{
+		if (mods->modifier[0] == 'l' && mods->modifier[1] == 'l')
+			pf_base(va_arg(ap, unsigned long long), mods);
+		else if (mods->modifier[0] == 'l')
+			pf_base(va_arg(ap, unsigned long), mods);
+		else
+			pf_base(va_arg(ap, unsigned int), mods);
+	}
 	if (*spec == '%')
 		pf_putchar('%', mods);
 	if (*spec == 'p' ? (mods->flag[0] = '#') : 0)
