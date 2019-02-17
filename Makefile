@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 
-NAME	= libft.a
+NAME	= libftprintf.a
 
 SRCS = ./srcs/ft_printf.c \
 		./srcs/libft/ft.c \
