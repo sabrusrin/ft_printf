@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/10 20:02:56 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/17 16:29:07 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ char	*ft_strchr(const char *s, int c)
 			return ((char*)s);
 		s++;
 	}
-	if ((char)c == '\0')
-		return ((char*)s);
 	return (NULL);
 }
 

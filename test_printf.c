@@ -6,11 +6,19 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/02/17 13:43:07 by chermist         ###   ########.fr       */
+=======
+/*   Updated: 2019/02/17 16:28:32 by chermist         ###   ########.fr       */
+>>>>>>> 42a682abfd207b7a19b162d5570519a1517b3c33
 /*                                                                            */
 /* ************************************************************************** */
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 42a682abfd207b7a19b162d5570519a1517b3c33
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -67,9 +75,20 @@ int		main(void)
 
 	//printf("\n%x", -42);
 	//ft_printf("\n%x\n", -42);
+<<<<<<< HEAD
 	ft_printf("\n|%5.o|", 0);
 	printf("\n|%5.o|", 0);
+<<<<<<< HEAD
 
 	ft_putnbr(printf("\n|%.5p|\n", 0));
 	ft_putnbr(ft_printf("\n|%.5p|\n", 0));
+=======
+	ft_putnbr(ft_printf("\n|%d|\n", 1));
+	ft_putnbr(printf("\n|%d|\n", 1));
+=======
+	//ft_printf("\n|%5.o|", 0);
+//	printf("\n|%5.o|", 0);
+ft_printf("%-5%", 0);
+>>>>>>> 36d618c9c21d323f0d13aabd4baac8cdd9fc1c9c
+>>>>>>> 42a682abfd207b7a19b162d5570519a1517b3c33
 }
