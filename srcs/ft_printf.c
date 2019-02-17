@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/16 23:48:00 by chermist         ###   ########.fr       */
+/*   Created: 2019/02/17 16:27:33 by chermist          #+#    #+#             */
+/*   Updated: 2019/02/17 16:36:04 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ char	*parse_modifier(char *str, t_mdfrs *mods)
 
 	j = 0;
 	while (FLAGS(*str) && (j < 5) && !(mods->flag[j + 1] = 0))
+	{
 		mods->flag[j++] = *str++;
+		if (!(*str))
+			return (str);
+	}
 	while (ft_isdigit(*str))
 		mods->width = (mods->width * 10) + (*str++ - '0');
 	if (*str == '.' && (mods->pr-- && ft_isdigit(*(str + 1)) ?
@@ -100,7 +104,10 @@ size_t	parse(const char *format, va_list ap)
 				return (i);
 		}
 		str++;
-		str = parse_modifier(str, &mods);
+		if (!(*(str = parse_modifier(str, &mods))))
+			return (i);
+		if (!(ALLSHT(*str)))
+			continue;
 		if (*str == 'n' && (count = va_arg(ap, int*)))
 			*count = i;
 		i += spec_exe(str, ap, &mods);
