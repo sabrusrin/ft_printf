@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assist.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:07:47 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/11 18:18:42 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/12 15:53:41 by lkarlon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	clean_mods(t_mdfrs *mods)
 	mods->spec = 0;
 }
 
-int		count_num(int i)
+int		count_num(long long i)
 {
 	static int	count = 0;
 
