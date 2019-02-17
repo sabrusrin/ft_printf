@@ -6,10 +6,10 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/16 23:30:06 by chermist         ###   ########.fr       */
-/*   Updated: 2019/02/16 18:24:26 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/17 13:43:07 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,4 +69,7 @@ int		main(void)
 	//ft_printf("\n%x\n", -42);
 	ft_printf("\n|%5.o|", 0);
 	printf("\n|%5.o|", 0);
+
+	ft_putnbr(printf("\n|%.5p|\n", 0));
+	ft_putnbr(ft_printf("\n|%.5p|\n", 0));
 }
