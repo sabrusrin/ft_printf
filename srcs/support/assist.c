@@ -6,25 +6,25 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:07:47 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/17 16:28:26 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/18 21:57:32 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_sup.h"
 
-void	clean_mods(t_mdfrs *mods)
+void	clean_mods(t_mdfrs *m)
 {
 	int i;
 
 	i = -1;
 	while (++i < 6)
-		mods->flag[i] = 0;
-	mods->c_num = 0;
-	mods->modifier[0] = 0;
-	mods->modifier[1] = 0;
-	mods->width = 0;
-	mods->pr = -1;
-	mods->spec = 0;
+		m->flag[i] = 0;
+	m->c_num = 0;
+	m->modifier[0] = 0;
+	m->modifier[1] = 0;
+	m->width = 0;
+	m->pr = -1;
+	m->spec = 0;
 }
 
 int		count_num(long long i)
@@ -42,3 +42,17 @@ int		count_num(long long i)
 	return (++count);
 }
 
+int		ft_isdigit(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+double	ft_pow(double d, int pow)
+{
+	return (pow ? (d * ft_pow(d, pow - 1)) : 1);
+}
+
+/* void	spec_case(t_mdfrs m, char spec)
+{
+
+} */

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/17 16:27:33 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 22:31:37 by chermist         ###   ########.fr       */
+/*   Created: 2019/02/18 22:42:39 by chermist          #+#    #+#             */
+/*   Updated: 2019/02/18 22:54:58 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
 char		*parse_modifier(char *str, t_mdfrs *mods)
 {
@@ -73,15 +73,7 @@ size_t		spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 	if (*spec == 's' || *spec == 'S')
 		pf_putstr(va_arg(ap, char*), mods);
 	if (*spec == 'x' || *spec == 'X' || *spec == 'o' || *spec == 'O')
-	{
-		if ((mods->modifier[0] == 'l' && mods->modifier[1] == 'l') ||
-		mods->modifier[0] == 'j')//j added here
-			pf_base(va_arg(ap, unsigned long long), mods);
-		else if (mods->modifier[0] == 'l')
-			pf_base(va_arg(ap, unsigned long), mods);
-		else
-			pf_base(va_arg(ap, unsigned int), mods);
-	}
+        type_parse(ap, mods, 'x');
 	if (*spec == '%')
 		pf_putchar('%', mods);
 	if (*spec == 'p' ? (mods->flag[0] = '#') : 0)
@@ -121,13 +113,16 @@ size_t		parse(const char *format, va_list ap)
 	return (i);
 }
 
-int			ft_printf(const char *format, ...)
+void        type_parse(va_list ap, t_mdfrs *m, char flag)
 {
-	int		result;
-	va_list ap;
-
-	va_start(ap, format);
-	result = parse(format, ap);
-	va_end(ap);
-	return (result);
+    if (flag == 'x')
+    {
+		if ((m->modifier[0] == 'l' && m->modifier[1] == 'l') ||
+		m->modifier[0] == 'j')//j added here
+			pf_base(va_arg(ap, unsigned long long), m);
+		else if (m->modifier[0] == 'l')
+			pf_base(va_arg(ap, unsigned long), m);
+		else
+			pf_base(va_arg(ap, unsigned int), m);
+	}    
 }

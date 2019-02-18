@@ -3,13 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+         #
+#    By: chermist <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/04 20:03:10 by chermist          #+#    #+#              #
-#    Updated: 2019/02/12 21:01:51 by chermist         ###   ########.fr        #
-#    Updated: 2019/02/12 18:47:09 by lkarlon-         ###   ########.fr        #
+#    Updated: 2019/02/18 22:48:49 by chermist         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 
 NAME	= libftprintf.a
@@ -18,7 +18,8 @@ SRCS = ./srcs/ft_printf.c \
 		./srcs/libft/ft.c \
 		./srcs/support/flags_exe.c \
 		./srcs/support/spec_exe.c \
-		./srcs/support/assist.c
+		./srcs/support/assist.c \
+		./srcs/support/parse.c
 
 INCLUDES = ./includes/ft_printf.h \
 			./includes/ft_sup.h

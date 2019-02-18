@@ -6,17 +6,12 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/17 21:44:18 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/18 22:08:31 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../../includes/ft_printf.h"
-
-double	ft_pow(double d, int pow)
-{
-	return (pow ? (d * ft_pow(d, pow - 1)) : 1);
-}
 
 void	do_width(t_mdfrs *m, char f)
 {
@@ -71,4 +66,35 @@ void	do_preci(t_mdfrs *m, long double dpart, char c)
 		while (i--)
 			ft_putchar('0');
 	}
+}
+
+void	nbr_preci(t_mdfrs *m, long long *n, char *sign)
+{
+	if ((m->pr == -2 || m->pr == 0))
+		m->pr = 0;
+	else if ((*sign == '-' || ((*n < 0 && (*sign = '-') ?
+			(*n = -*n) : 0))) && (m->pr > m->c_num - 1))
+		m->pr -= m->c_num - 1;
+	else if ((*n >= 0 && *sign != '-' && *sign != '+' &&
+	m->pr > m->c_num) || (*sign == '+' && m->pr > m->c_num - 1))
+		(*sign == '+') ? (m->pr -= m->c_num - 1) : (m->pr -= m->c_num);
+	else
+		m->pr = 0;
+	m->c_num += m->pr;
+}
+
+void	nbr_sign(t_mdfrs *m, char *sign, long long *n, char *p)
+{
+	if (m->spec != 'u' && m->spec != 'U' &&
+	ft_strchr(m->flag, '+') && *n >= 0 && (*sign = '+'))
+		(m->c_num)++;
+	else if (m->spec != 'u' && m->spec != 'U' &&
+	ft_strchr(m->flag, '+') && *n < 0 && (*sign = '-'))
+		*n = -*n;
+	else if (m->spec != 'u' && m->spec != 'U' &&
+	p && (*n < 0) && (*sign = '-'))
+		*n = -*n;
+	else if (m->spec != 'u' && m->spec != 'U' &&
+	ft_strchr(m->flag, ' ') && *n > 0 && (*sign = ' '))
+		(m->c_num)++;
 }

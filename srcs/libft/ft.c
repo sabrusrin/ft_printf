@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/17 16:29:07 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/18 21:56:07 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,4 @@ void	ft_putnbr(long long n)
 	}
 	ft_putnbr(n / 10);
 	ft_putchar((n % 10) + '0');
-}
-
-int		ft_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
 }

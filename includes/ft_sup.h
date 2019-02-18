@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/17 16:28:49 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/18 22:52:58 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ double			ft_pow(double d, int pow);
 void			do_width(t_mdfrs *m, char f);
 void			do_hash(t_mdfrs *m, int f);
 void			do_preci(t_mdfrs *m, long double dpart, char c);
-void			clean_mods(t_mdfrs *mods);
+void			nbr_preci(t_mdfrs *m, long long *n, char *sign);
+void			nbr_sign(t_mdfrs *m, char *sign, long long *n, char *p);
+void        	type_parse(va_list ap, t_mdfrs *m, char flag);
+void			clean_mods(t_mdfrs *m);
 int				count_num(long long i);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
 char			*ft_strchr(const char *s, int c);
 void			ft_putnbr(long long n);
-int				ft_isdigit(int c);
+int				ft_isdigit(char c);
 int				ft_putstr(char const *s);
 void			ft_putchar(char c);
 

@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/17 23:42:29 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/18 17:46:48 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,28 @@ int		main(void)
 	//printf("\n%x", -42);
 	//ft_printf("\n%x\n", -42);
 
-	ft_printf("\n|%5.o|", 0);
-	printf("\n|%5.o|", 0);
+//	ft_printf("\n|%5.o|", 0);
+//	printf("\n|%5.o|", 0);
 
 	ft_putnbr(printf("\n|%.5p|\n", 0));
 	ft_putnbr(ft_printf("\n|%.5p|\n", 0));
-	ft_putnbr(ft_printf("\n|%d|\n", 1));
-	ft_putnbr(printf("\n|%d|\n", 1));
+//	ft_putnbr(ft_printf("\n|%d|\n", 1));
+//	ft_putnbr(printf("\n|%d|\n", 1));
 	//ft_printf("\n|%5.o|", 0);
 //	printf("\n|%5.o|", 0);
-	ft_printf("%-5%", 0);
-	ft_printf("\n%05.0d", -42);
-	ft_printf("\n%+05.2d", -42);
-	printf("\n%05.0d", -42);
-	printf("\n%+5.2d", -42);
+//	ft_printf("\n|%-5%|", 0);
+//	ft_printf("\n%05.0d", -42);
+//	ft_printf("\n%+5.2d", -42);
+//	printf("\n%05.0d", -42);
+//	printf("\n%+5.2d", -42);
+//	printf("\n%05d", -42);
+//	ft_printf("\n%05d", -42);
+//	ft_printf("\n%+10.5d", 4242);
+//	printf("\n%+10.5d", 4242);
+//	ft_printf("\n%+10.5d", -4242);
+//	printf("\n%+10.5d", -4242);
+//	ft_printf("\n|%10.5d|", -4242);
+//	printf("\n|%10.5d|", -4242);
+	ft_printf("\n|@moulitest: %5.d| %5.0d|", 0, 0);
+	printf("\n|@moulitesp: %5.d| %5.0d|", 0, 0);
 }
