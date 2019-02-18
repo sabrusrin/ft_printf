@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:07:47 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 21:57:32 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/18 22:59:36 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,3 @@ double	ft_pow(double d, int pow)
 {
 	return (pow ? (d * ft_pow(d, pow - 1)) : 1);
 }
-
-/* void	spec_case(t_mdfrs m, char spec)
-{
-
-} */

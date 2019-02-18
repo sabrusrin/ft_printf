@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 22:52:58 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/18 23:47:24 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void			do_hash(t_mdfrs *m, int f);
 void			do_preci(t_mdfrs *m, long double dpart, char c);
 void			nbr_preci(t_mdfrs *m, long long *n, char *sign);
 void			nbr_sign(t_mdfrs *m, char *sign, long long *n, char *p);
-void        	type_parse(va_list ap, t_mdfrs *m, char flag);
+void			type_parse(va_list ap, t_mdfrs *m, char flag);
+//void			save_mdfr(char *str, t_mdfrs *m);
 void			clean_mods(t_mdfrs *m);
 int				count_num(long long i);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
