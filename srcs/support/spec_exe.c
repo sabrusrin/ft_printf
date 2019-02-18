@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 19:10:04 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/17 16:28:22 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/17 23:41:26 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,33 @@ void	pf_putstr(char *s, t_mdfrs *m)
 void	pf_putnbr(long long n, t_mdfrs *m)
 {
 	char	sign;
+	char	*p;
 
 	sign = 0;
 	m->c_num = count_num(n);
-	if (m->spec != 'u' && ft_strchr(m->flag, '+') && (n > 0) && (sign = '+'))
+	p = ft_strchr(m->flag, '0');
+	if (m->spec != 'u' && ft_strchr(m->flag, '+') && (n >= 0) && (sign = '+'))
 		(m->c_num)++;
+	else if (m->spec != 'u' && ft_strchr(m->flag, '+') && (n < 0) && (sign = '-'))
+		n = -n;
+	else if (m->spec != 'u' && p && (n < 0) && (sign = '-'))
+		n = -n;
 	else if (m->spec != 'u' && ft_strchr(m->flag, ' ') &&
 			(n > 0) && (sign = ' '))
 		(m->c_num)++;
 	(sign) ? write(1, &sign, 1) : 1;
+	if (m->pr != -1)
+	{
+		p ? (*p = 'z') : 1;
+		((m->pr == -2 || m->pr == 0)) ? (m->pr = 0) : 0;
+		if ((sign == '-' || n < 0) && (m->pr > m->c_num - 1))
+			m->pr -= m->c_num - 1;
+		else if ((n >= 0 && sign != '-' && sign != '+' &&
+		m->pr > m->c_num) || (sign == '+' && m->pr > m->c_num - 1))
+			(sign == '+') ? (m->pr -= m->c_num - 1) : (m->pr -= m->c_num);
+	}
 	do_width(m, 'R');
+	(m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	ft_putnbr(n);
 	do_width(m, 'L');
 }

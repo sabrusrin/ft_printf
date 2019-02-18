@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 20:03:15 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/17 18:41:23 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/17 21:44:45 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ size_t	spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 		pf_putstr(va_arg(ap, char*), mods);
 	if (*spec == 'x' || *spec == 'X' || *spec == 'o')
 	{
-		if (mods->modifier[0] == 'l' && mods->modifier[1] == 'l')
+		if ((mods->modifier[0] == 'l' && mods->modifier[1] == 'l') ||
+		mods->modifier[0] == 'j')//j added here
 			pf_base(va_arg(ap, unsigned long long), mods);
 		else if (mods->modifier[0] == 'l')
 			pf_base(va_arg(ap, unsigned long), mods);
