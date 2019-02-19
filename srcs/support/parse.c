@@ -6,24 +6,25 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 22:42:39 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 23:48:58 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:26:47 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
+#include <stdio.h>
 
-/* void		save_mdfr(char *str, t_mdfrs *m)
+void		save_mdfr(char **str, t_mdfrs *m)
 {
-	if (*str == 'l' && (*(str + 1) == 'l') && (str += 2))
+	if (**str == 'l' && (*(*str + 1) == 'l') && (*str += 2))
 		ft_memcpy(m->modifier, "ll", 2);
-	else if (*str == 'h' && (*(str + 1) == 'h') && (str += 2))
+	else if (**str == 'h' && (*(*str + 1) == 'h') && (*str += 2))
 		ft_memcpy(m->modifier, "hh", 2);
 	else
 	{
-		m->modifier[0] = *str++;
+		m->modifier[0] = *(*str)++;
 		m->modifier[1] = 0;
 	}
-} */
+}
 
 char		*parse_modifier(char *str, t_mdfrs *mods)
 {
@@ -47,18 +48,8 @@ char		*parse_modifier(char *str, t_mdfrs *mods)
 			!(mods->pr = 0) : !(*str++)))
 			while (ft_isdigit(*++str))
 				mods->pr = (mods->pr * 10) + (*str - '0');
-		if (MDFR(*str))//save_mdfr(str, mods); trying to save the space in this function
-		{
-			if (*str == 'l' && (*(str + 1) == 'l') && (str += 2))
-				ft_memcpy(mods->modifier, "ll", 2);
-			else if (*str == 'h' && (*(str + 1) == 'h') && (str += 2))
-				ft_memcpy(mods->modifier, "hh", 2);
-			else
-			{
-				mods->modifier[0] = *str++;
-				mods->modifier[1] = 0;
-			}
-		}
+		if (MDFR(*str))
+			save_mdfr(&str, mods);
 	}
 	mods->spec = *str;
 	return (str);
@@ -71,7 +62,7 @@ size_t		spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 	if (*spec == 'd' || *spec == 'D' || *spec == 'i')
 		type_parse(ap, mods, 'd');
 	if (*spec == 'u' || *spec == 'U')
-		pf_putnbr(va_arg(ap, unsigned int), mods);
+		u_type_parse(ap, mods);
 	if (*spec == 'f' || *spec == 'F')
 		(mods->modifier[0] == 'L') ?
 		(pf_putdbl(va_arg(ap, long double), mods)) :
@@ -123,21 +114,50 @@ void		type_parse(va_list ap, t_mdfrs *m, char flag)
 {
 	if (flag == 'd')
 	{
-		if (m->modifier[0] == 'l' && m->modifier[1] == 'l')
+		if ((m->modifier[0] == 'l' && m->modifier[1] == 'l') 
+		|| m->modifier[0] == 'z' || m->modifier[0] == 'j')
 			pf_putnbr(va_arg(ap, long long), m);
 		else if (m->modifier[0] == 'l')
 			pf_putnbr(va_arg(ap, long), m);
+		else if (m->modifier[0] == 'h' && m->modifier[1] == 'h')
+			pf_putnbr((char)va_arg(ap, int), m);
+		else if (m->modifier[0] == 'h')
+			pf_putnbr((short)va_arg(ap, int), m);
 		else
 			pf_putnbr(va_arg(ap, int), m);
 	}
 	if (flag == 'x')
-	{
+	{	
 		if ((m->modifier[0] == 'l' && m->modifier[1] == 'l') ||
-		m->modifier[0] == 'j')//j added here
+		m->modifier[0] == 'j' || m->modifier[0] == 'z')
 			pf_base(va_arg(ap, unsigned long long), m);
 		else if (m->modifier[0] == 'l')
 			pf_base(va_arg(ap, unsigned long), m);
+		else if (m->modifier[0] == 'h' && m->modifier[1] == 'h')
+			pf_base((unsigned char)va_arg(ap, unsigned int), m);
+		else if (m->modifier[0] == 'h')
+			pf_base((unsigned short)va_arg(ap, unsigned int), m);
 		else
 			pf_base(va_arg(ap, unsigned int), m);
 	}
+}
+
+void		u_type_parse(va_list ap, t_mdfrs *m)
+{
+	if (m->spec == 'U')
+	{
+		pf_putnbr(va_arg(ap, unsigned long), m);
+		return ;
+	}
+	if ((m->modifier[0] == 'l' && m->modifier[1] == 'l') ||
+			m->modifier[0] == 'j' || m->modifier[0] == 'z')
+		pf_putnbr(va_arg(ap, unsigned long long), m);
+	else if (m->modifier[0] == 'l')
+		pf_putnbr(va_arg(ap, unsigned long), m);
+	else if (m->modifier[0] == 'h' && m->modifier[1] == 'h')
+		pf_putnbr((unsigned char)va_arg(ap, unsigned int), m);
+	else if (m->modifier[0] == 'h')
+		pf_putnbr((unsigned short)va_arg(ap, unsigned int), m);
+	else
+		pf_putnbr(va_arg(ap, unsigned int), m);
 }

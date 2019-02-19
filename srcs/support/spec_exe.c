@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 19:10:04 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 22:05:20 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/20 00:18:23 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	pf_putnbr(long long n, t_mdfrs *m)
 	char	sign;
 	char	*p;
 
+
 	sign = 0;
 	m->c_num = count_num(n);
 	p = ft_strchr(m->flag, '0');
@@ -64,7 +65,8 @@ void	pf_putnbr(long long n, t_mdfrs *m)
 		(sign) ? write(1, &sign, 1) : 1;
 	(m->pr == 0 && n == 0 && m->width != 0) ? m->width++ : 1;
 	do_width(m, 'R');
-	if (m->pr != -1)
+	if (m->pr != -1 || (n  == INT64_MIN && !
+			(ft_strchr(m->flag, '0')) && (sign = '-')))
 		(sign) ? write(1, &sign, 1) : 1;
 	(m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	(m->pr == 0 && n == 0) ? 0 : ft_putnbr(n);
@@ -108,6 +110,8 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 	char					*ptr;
 	int						base;
 
+	if (m->spec != 'o' && m->spec != 'O' && num == 0 && (ptr = ft_strchr(m->flag, '#')))
+		*ptr = 'z';
 	(m->spec == 'X' || m->spec == 'x' || m->spec == 'p') ? (base = 16) : 1;
 	(m->spec == 'o' || m->spec == 'O') ? (base = 8) : 1;
 	(m->spec == 'X') ? (int_list = "0123456789ABCDEF") :

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_printf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 23:49:48 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/20 00:14:46 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		main(void)
 
 	//ft_putnbr(printf("F%#8.2f   %8d  %s %#X %#o \n", 3.1435333345, 5675,  "Привет мир😊 ", 123, 123));
 
-	ft_putstr("\nOUR printf:");
+	/* ft_putstr("\nOUR printf:");
+ 	ft_putstr("\nOUR printf:");
 
 	ft_putnbr(ft_printf("\nПривет%c \\%s %d * %d = %d\\"
 			"💃 Как дела%c%8d|%#+0+5.f|%c", 46, st, 5, 6, 5*6, 63, 228, 3.1415, 10));
@@ -91,5 +92,13 @@ int		main(void)
 	ft_printf("\n|%10.5d|", -4242);
 	printf("\n|%10.5d|", -4242);
 	ft_printf("\n|@f: %5.d| %5.0d|", 0, 0);
-	printf("\n|@p: %5.d| %5.0d|", 0, 0);
+	printf("\n|@p: %5.d| %5.0d|", 0, 0); */
+	ft_printf("|1:%o|", 0);
+	ft_printf("\n|2:%#08x|", 42);
+	ft_printf("\n|3:@moulitest: %#.o %#.0o|", 0, 0);
+	ft_printf("\n|4:% 10.5d|", 4242);
+	printf("\n|1:%o|", 0);
+	printf("\n|2:%#08x|", 42);
+	printf("\n|3:@moulitest: %#.o %#.0o|", 0, 0);
+	printf("\n|4:% 10.5d|", 4242);
 }

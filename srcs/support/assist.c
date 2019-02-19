@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:07:47 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 22:59:36 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:26:04 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		count_num(long long i)
 	static int	count = 0;
 
 	count = 0;
+	if (i == INT64_MIN)
+		return (20);
 	if ((i < 0) && (i = -i))
 		count++;
 	while (i / 10 > 0)

@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 23:47:24 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:25:55 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void			ft_putnbr(long long n);
 int				ft_isdigit(char c);
 int				ft_putstr(char const *s);
 void			ft_putchar(char c);
+void			u_type_parse(va_list ap, t_mdfrs *m);
 
 #endif

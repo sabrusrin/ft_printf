@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/18 21:56:07 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:27:40 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int		ft_putstr(char const *s)
 
 void	ft_putnbr(long long n)
 {
-	if (n == -2147483648)
+	if (n == INT64_MIN)
 	{
-		ft_putstr("-2147483648");
+		ft_putstr("9223372036854775808");
 		return ;
 	}
 	if (n < 0)
