@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assist.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:07:47 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/19 22:26:04 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/20 22:04:14 by lkarlon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ int		count_num(long long i)
 		return (20);
 	if ((i < 0) && (i = -i))
 		count++;
+	while (i / 10 > 0)
+	{
+		++count;
+		i /= 10;
+	}
+	return (++count);
+}
+
+int		u_count_num(unsigned long long i)
+{
+	static int	count = 0;
+
+	count = 0;
 	while (i / 10 > 0)
 	{
 		++count;

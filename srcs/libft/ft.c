@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/19 22:27:40 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/20 21:49:41 by lkarlon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,17 @@ void	ft_putnbr(long long n)
 		write(1, "-", 1);
 		n *= -1;
 	}
+	if (n < 10)
+	{
+		ft_putchar(n + '0');
+		return ;
+	}
+	ft_putnbr(n / 10);
+	ft_putchar((n % 10) + '0');
+}
+
+void	u_ft_putnbr(unsigned long long n)
+{
 	if (n < 10)
 	{
 		ft_putchar(n + '0');

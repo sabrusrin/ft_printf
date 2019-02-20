@@ -6,7 +6,7 @@
 /*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/19 21:30:42 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/20 21:58:53 by lkarlon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ void	nbr_preci(t_mdfrs *m, long long *n, char *sign)
 	else if ((*sign == '-' || ((*n < 0 && (*sign = '-') ?
 			(*n = -*n) : 0))) && (m->pr > m->c_num - 1))
 		m->pr -= m->c_num - 1;
-	else if ((*n >= 0 && *sign != '-' && *sign != '+' &&
-	m->pr > m->c_num) || (*sign == '+' && m->pr > m->c_num - 1))
-		(*sign == '+') ? (m->pr -= m->c_num - 1) : (m->pr -= m->c_num);
+	else if ((*n >= 0 && *sign != '-' && *sign != '+' && m->pr > m->c_num)
+			|| ((*sign == '+' || *sign == ' ') && m->pr > m->c_num - 1))
+		(*sign == '+' || *sign == ' ') ? (m->pr -= m->c_num - 1) :
+			(m->pr -= m->c_num);
 	else
 		m->pr = 0;
 	m->c_num += m->pr;
@@ -98,3 +99,4 @@ void	nbr_sign(t_mdfrs *m, char *sign, long long *n, char *p)
 	ft_strchr(m->flag, ' ') && *n > 0 && (*sign = ' '))
 		(m->c_num)++;
 }
+

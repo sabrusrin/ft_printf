@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_printf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 00:14:46 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/20 23:07:29 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "./includes/ft_sup.h"
+#include <limits.h>
 
 int		ft_printf(const char *format, ...);
 
@@ -93,12 +94,29 @@ int		main(void)
 	printf("\n|%10.5d|", -4242);
 	ft_printf("\n|@f: %5.d| %5.0d|", 0, 0);
 	printf("\n|@p: %5.d| %5.0d|", 0, 0); */
-	ft_printf("|1:%o|", 0);
+//	ft_printf("@main_ftprintf: %####0000 33..1..#00d\n", 256);
+//	printf("\n@main_ftprintf: %####0000 33..1..#00d\n", 256);
+	/* ft_printf("|1:%o|", 0);
 	ft_printf("\n|2:%#08x|", 42);
 	ft_printf("\n|3:@moulitest: %#.o %#.0o|", 0, 0);
 	ft_printf("\n|4:% 10.5d|", 4242);
+	ft_printf("\n|5:%05+d|", -42);
+	ft_printf("\n|6:%05+d|", 42);
 	printf("\n|1:%o|", 0);
 	printf("\n|2:%#08x|", 42);
 	printf("\n|3:@moulitest: %#.o %#.0o|", 0, 0);
 	printf("\n|4:% 10.5d|", 4242);
+	printf("\n|5:%05+d|", -42);
+	printf("\n|6:%05+d|", 42); */
+	ft_putnbr(ft_printf("\n1:{% 03d}\n", 0));
+	ft_putnbr(ft_printf("\n2:|%#o|\n", 0));
+	ft_putnbr(ft_printf("\n3:{%-15p}\n", 0));
+	ft_putnbr(ft_printf("\n4:{%-15Z}\n", 123));
+	ft_putnbr(ft_printf("\n5:|%.5p|\n", 0));
+	ft_putnbr(printf("\n1:{% 03d}\n", 0));
+	ft_putnbr(printf("\n2:|%#o|\n", 0));
+	ft_putnbr(printf("\n3:{%-15p}\n", 0));
+	ft_putnbr(printf("\n4:{%-15Z}\n", 123));
+	ft_putnbr(printf("\n5:|%.5p|\n", 0));
+
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spec_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 19:10:04 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 00:18:23 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/20 22:04:27 by lkarlon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,41 @@ void	pf_putnbr(long long n, t_mdfrs *m)
 	nbr_sign(m, &sign, &n, p);
 	if (m->pr != -1 && (p ? (*p = 'z') : 1))
 		nbr_preci(m, &n, &sign);
-	if (m->pr == -1)
+	if (p && m->pr == -1)
 		(sign) ? write(1, &sign, 1) : 1;
 	(m->pr == 0 && n == 0 && m->width != 0) ? m->width++ : 1;
 	do_width(m, 'R');
+	if (!p && m->pr == -1)
+		(sign) ? write(1, &sign, 1) : 1;
 	if (m->pr != -1 || (n  == INT64_MIN && !
 			(ft_strchr(m->flag, '0')) && (sign = '-')))
 		(sign) ? write(1, &sign, 1) : 1;
 	(m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	(m->pr == 0 && n == 0) ? 0 : ft_putnbr(n);
+	(m->pr == 0 && n == 0 && m->width == 0) ? m->c_num-- : 1;
+	do_width(m, 'L');
+}
+
+void	u_pf_putnbr(unsigned long long n, t_mdfrs *m)
+{
+	char	*p;
+
+	m->c_num = u_count_num(n);
+	p = ft_strchr(m->flag, '0');
+	if (m->pr != -1 && (p ? (*p = 'z') : 1))
+	{
+		if ((m->pr == -2 || m->pr == 0))
+			m->pr = 0;
+		else if (m->pr > m->c_num )
+			(m->pr -= m->c_num);
+		else
+			m->pr = 0;
+		m->c_num += m->pr;
+	}
+	(m->pr == 0 && n == 0 && m->width != 0) ? m->width++ : 1;
+	do_width(m, 'R');
+	(m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
+	(m->pr == 0 && n == 0) ? 0 : u_ft_putnbr(n);
 	(m->pr == 0 && n == 0 && m->width == 0) ? m->c_num-- : 1;
 	do_width(m, 'L');
 }
@@ -110,7 +136,8 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 	char					*ptr;
 	int						base;
 
-	if (m->spec != 'o' && m->spec != 'O' && num == 0 && (ptr = ft_strchr(m->flag, '#')))
+	if (m->spec != 'o' && m->spec != 'O' && m->spec != 'p' &&
+	num == 0 && (ptr = ft_strchr(m->flag, '#')))
 		*ptr = 'z';
 	(m->spec == 'X' || m->spec == 'x' || m->spec == 'p') ? (base = 16) : 1;
 	(m->spec == 'o' || m->spec == 'O') ? (base = 8) : 1;
@@ -124,12 +151,15 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 		num /= base;
 	if ((m->pr == -2 || m->pr == 0) && *ptr == '0' && (ptr = ""))
 		m->c_num = 0;
-	(m->spec == 'o' && m->c_num < m->pr && (m->pr = m->pr - m->c_num)) ?
-		(m->c_num += m->pr) : 1;
+	((m->spec == 'o' || m->spec == 'O' || m->spec == 'X' || m->spec == 'x') &&
+		(m->c_num < m->pr) && (m->pr = m->pr - m->c_num)) ?
+		(m->c_num += m->pr) : (m->pr -= m->c_num);
 	(ft_strchr(m->flag, '#') && m->pr <= 0) ? do_hash(m, 0) : 1;
+	(ft_strchr(m->flag, '#') && m->pr <= 0 && ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
 	do_width(m, 'R');
-	(ft_strchr(m->flag, '#') && m->pr <= 0) ? do_hash(m, 1) : 1;
-	(m->spec == 'o' && m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
+	(ft_strchr(m->flag, '#') && m->pr <= 0 && !ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
+	((m->spec == 'o' || m->spec == 'O' || m->spec == 'X' || m->spec == 'x')
+		&& m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	ft_putstr(ptr);
 	do_width(m, 'L');
 }
