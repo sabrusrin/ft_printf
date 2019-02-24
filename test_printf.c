@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 23:07:29 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/25 02:37:04 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@
 #include <string.h>
 #include "./includes/ft_sup.h"
 #include <limits.h>
+#include <locale.h>
 
 int		ft_printf(const char *format, ...);
 
 int		main(void)
 {
+	//wchar_t hp = u&0x1F600
 	char *st = "Umnozheniye串€";
 	float t = 3.14;
+	unsigned long l;
+
+	setlocale(LC_ALL, "ru_RU.UTF-8");
 	 //short int		s = 23458;
 
 	//ft_putnbr(printf("F%#8.2f   %8d  %s %#X %#o \n", 3.1435333345, 5675,  "Привет мир😊 ", 123, 123));
@@ -96,27 +101,20 @@ int		main(void)
 	printf("\n|@p: %5.d| %5.0d|", 0, 0); */
 //	ft_printf("@main_ftprintf: %####0000 33..1..#00d\n", 256);
 //	printf("\n@main_ftprintf: %####0000 33..1..#00d\n", 256);
-	/* ft_printf("|1:%o|", 0);
-	ft_printf("\n|2:%#08x|", 42);
-	ft_printf("\n|3:@moulitest: %#.o %#.0o|", 0, 0);
-	ft_printf("\n|4:% 10.5d|", 4242);
-	ft_printf("\n|5:%05+d|", -42);
-	ft_printf("\n|6:%05+d|", 42);
-	printf("\n|1:%o|", 0);
-	printf("\n|2:%#08x|", 42);
-	printf("\n|3:@moulitest: %#.o %#.0o|", 0, 0);
-	printf("\n|4:% 10.5d|", 4242);
-	printf("\n|5:%05+d|", -42);
-	printf("\n|6:%05+d|", 42); */
-	ft_putnbr(ft_printf("\n1:{% 03d}\n", 0));
-	ft_putnbr(ft_printf("\n2:|%#o|\n", 0));
-	ft_putnbr(ft_printf("\n3:{%-15p}\n", 0));
-	ft_putnbr(ft_printf("\n4:{%-15Z}\n", 123));
-	ft_putnbr(ft_printf("\n5:|%.5p|\n", 0));
-	ft_putnbr(printf("\n1:{% 03d}\n", 0));
-	ft_putnbr(printf("\n2:|%#o|\n", 0));
-	ft_putnbr(printf("\n3:{%-15p}\n", 0));
-	ft_putnbr(printf("\n4:{%-15Z}\n", 123));
-	ft_putnbr(printf("\n5:|%.5p|\n", 0));
+
+	ft_putnbr(ft_printf("\n{%030S}\n", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B"));
+	ft_putnbr(printf("\n{%030S}\n", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B"));
+	ft_putnbr(ft_printf("\n%#.O\n", 0));
+	ft_putnbr(printf("\n%#.O\n", 0));
+	ft_putnbr(ft_printf("\n%#.x, %#.0x\n", 0, 0));
+	ft_putnbr(printf("\n%#.x, %#.0x\n", 0, 0));
+	ft_putnbr(ft_printf("\n{%05.S}\n", L"42 c est cool"));
+	ft_putnbr(printf("\n{%05.S}\n", L"42 c est cool"));
+	ft_putnbr(ft_printf("\n{%05.s}\n", 0));
+	ft_putnbr(printf("\n{%05.s}\n", 0));
+	ft_putnbr(ft_printf("\n{%05.Z}\n", 0));
+	ft_putnbr(ft_printf("\n{%05.Z}\n", 0));
+	ft_putnbr(ft_printf("\n{%#.5x}\n", 1));
+	ft_putnbr(printf("\n{%#.5x}\n", 1));
 
 }

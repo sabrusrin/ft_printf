@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sup.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 22:04:35 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/24 20:30:40 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 typedef struct	s_mdfrs
 {
+	char		*pbuffer;
 	char		flag[6];
 	char		modifier[2];
 	int			width;
@@ -24,7 +25,7 @@ typedef struct	s_mdfrs
 	int			c_num;
 }				t_mdfrs;
 
-void			pf_putchar(char c, t_mdfrs *m);
+void			pf_putchar(int c, t_mdfrs *m);
 void			pf_putstr(char	*s, t_mdfrs *m);
 void			pf_putnbr(long long n, t_mdfrs *m);
 void			u_pf_putnbr(unsigned long long n, t_mdfrs *m);
@@ -46,11 +47,15 @@ char			*ft_strchr(const char *s, int c);
 void			ft_putnbr(long long n);
 int				ft_isdigit(char c);
 int				ft_putstr(char const *s);
-void			ft_putchar(char c);
+int				l_ft_putchar(int c);
+int				ft_putchar(int c);
 void			x_type_parse(va_list ap, t_mdfrs *m);
 void			u_type_parse(va_list ap, t_mdfrs *m);
 void			d_type_parse(va_list ap, t_mdfrs *m);
 void			u_ft_putnbr(unsigned long long n);
 int				u_count_num(unsigned long long i);
+int				more_bytes_putchar(int c);
+void			l_pf_putstr(int *s, t_mdfrs *m);
+int				l_ft_putstr(int *s);
 
 #endif

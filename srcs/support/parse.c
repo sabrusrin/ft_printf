@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 22:42:39 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 23:00:39 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/25 01:33:39 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,29 @@
 
 void		save_mdfr(char **str, t_mdfrs *m)
 {
+	int		save;
+	int		current;
 	if (m->modifier[0] && (*(*str)) != 'D' && (*(*str)) != 'U')
 	{
 		while (MDFR(*(*str)))
 		{
 			(*str)++;
 			if ((*(*str)) == 'D' && (*(*str)) == 'U')
-				break;
+				break ;
 			return ;
 		}
 	}
-	if (**str == 'l' && (*(*str + 1) == 'l') && (*str += 2))
+	if (**str == 'l' && (*(*str + 1) == 'l') && (*str += 2) && (current = 4))
 		ft_memcpy(m->modifier, "ll", 2);
-	else if (**str == 'h' && (*(*str + 1) == 'h') && (*str += 2))
+	else if (**str == 'h' && (*(*str + 1) == 'h') && (*str += 2) && (current = 1))
 		ft_memcpy(m->modifier, "hh", 2);
 	else
 	{
+		current = (*(*str) == 'l') ? 3 : 2;
 		m->modifier[0] = *(*str)++;
 		m->modifier[1] = 0;
 	}
+	save = current;
 }
 
 char		*parse_modifier(char *str, t_mdfrs *mods)
@@ -78,13 +82,15 @@ size_t		spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 	if (*spec == 'f' || *spec == 'F')
 		(mods->modifier[0] == 'L') ? (pf_putdbl(va_arg(ap, long double), mods)) :
 			(pf_putdbl(va_arg(ap, double), mods));
-	if (*spec == 's' || *spec == 'S')
+	if (*spec == 's' && mods->modifier[0] != 'l')
 		pf_putstr(va_arg(ap, char*), mods);
+	if (*spec == 'S' || (*spec == 's' && mods->modifier[0] == 'l'))
+		l_pf_putstr(va_arg(ap, int*), mods);
 	if (*spec == 'x' || *spec == 'X' || *spec == 'o' || *spec == 'O')
 		x_type_parse(ap, mods);
 	if (*spec == '%')
 		pf_putchar('%', mods);
-	if (*spec == 'p' ? (mods->flag[0] = '#') : 0)
+	if (*spec == 'p')
 		(pf_base(va_arg(ap, long int), mods));
 	return (mods->c_num);
 }

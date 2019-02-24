@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 21:49:41 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/24 20:23:00 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_sup.h"
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
+#include <stdio.h>
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
@@ -41,12 +37,34 @@ char	*ft_strchr(const char *s, int c)
 int		ft_putstr(char const *s)
 {
 	int count;
+	int final;
+
+	count = 0;
+	final = 0;
+	if (!s)
+		return (0);
+	while (*s)
+	{
+		count = ft_putchar((int)*s);
+		s += count;
+		final += count;
+	}
+	return (final);
+}
+
+int		l_ft_putstr(int *s)
+{
+	int count;
 
 	count = 0;
 	if (!s)
 		return (0);
-	while (*s && ++count)
-		ft_putchar(*s++);
+	while (*s)
+	{
+	//	printf("\nnumber: %d\n", (*s)); //
+		count += l_ft_putchar(*s);
+		s++;
+	}
 	return (count);
 }
 

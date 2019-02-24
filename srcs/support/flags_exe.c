@@ -6,7 +6,7 @@
 /*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 21:58:53 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/25 01:58:44 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	do_width(t_mdfrs *m, char f)
 
 void	do_hash(t_mdfrs *m, int f)
 {
-	if (!f && (m->spec == 'o'))
+	if (!f && (m->spec == 'o' || m->spec == 'O'))
 		m->c_num++;
 	else if (!f && (m->spec == 'x' || m->spec == 'X' || m->spec == 'p'))
 		m->c_num += 2;
@@ -45,7 +45,7 @@ void	do_hash(t_mdfrs *m, int f)
 		ft_putchar('0');
 		ft_putchar(m->spec);
 	}
-	else if ((f == 1) && m->spec == 'o')
+	else if ((f == 1) && (m->spec == 'o' || m->spec == 'O'))
 		ft_putchar('0');
 }
 
@@ -96,7 +96,7 @@ void	nbr_sign(t_mdfrs *m, char *sign, long long *n, char *p)
 	p && (*n < 0) && (*sign = '-'))
 		*n = -*n;
 	else if (m->spec != 'u' && m->spec != 'U' &&
-	ft_strchr(m->flag, ' ') && *n > 0 && (*sign = ' '))
+	ft_strchr(m->flag, ' ') && *n >= 0 && (*sign = ' '))
 		(m->c_num)++;
 }
 

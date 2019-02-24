@@ -6,7 +6,7 @@
 /*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:07:47 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 22:04:14 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/25 00:57:27 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	clean_mods(t_mdfrs *m)
 
 	i = -1;
 	while (++i < 6)
-		m->flag[i] = 0;
+		m->flag[i] = '|';
 	m->c_num = 0;
 	m->modifier[0] = 0;
 	m->modifier[1] = 0;

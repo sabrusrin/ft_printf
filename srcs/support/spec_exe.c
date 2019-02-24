@@ -3,22 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   spec_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 19:10:04 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/20 22:04:27 by lkarlon-         ###   ########.fr       */
+/*   Updated: 2019/02/25 02:48:12 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../../includes/ft_sup.h"
 
-void	pf_putchar(char c, t_mdfrs *m)
+void	pf_putchar(int c, t_mdfrs *m)
 {
+	int a;
+
 	m->c_num++;
 	do_width(m, 'R');
-	ft_putchar(c);
+	if (m->spec == 'c' && m->modifier[0] != 'l')
+		a = ft_putchar(c);
+	else
+		a = l_ft_putchar(c);
 	do_width(m, 'L');
+	m->c_num += a - 1;
 }
 
 void	pf_putstr(char *s, t_mdfrs *m)
@@ -49,11 +55,40 @@ void	pf_putstr(char *s, t_mdfrs *m)
 	(*s && m->pr > 0 && (m->pr < m->c_num)) ? free(tmp) : 1;
 }
 
+void	l_pf_putstr(int *s, t_mdfrs *m)
+{
+	int	*tmp;
+	int	save;
+
+	tmp = s;
+	if ((s == 0) ? !(s = 0) : 0)
+		m->c_num = 6;
+	else if (*s)
+	{
+		while (*tmp++)
+			m->c_num++;
+		if ((!m->pr || m->pr == -2) ? (m->pr = -2) : 0)
+			s = 0;
+		else if (m->pr > 0 && (m->pr < m->c_num))
+		{
+			tmp = malloc(m->pr + 1);
+			tmp[m->pr] = 0;
+			ft_memcpy(tmp, s, m->pr);
+			s = tmp;
+			m->c_num = m->pr;
+		}
+	}
+	save = m->c_num;
+	do_width(m, 'R');
+	(s == 0) ? ft_putstr("(null)") : (m->c_num = l_ft_putstr(s));
+	do_width(m, 'L');
+	(m->pr > 0 && *s && (m->pr < save)) ? free(tmp) : 1;
+}
+
 void	pf_putnbr(long long n, t_mdfrs *m)
 {
 	char	sign;
 	char	*p;
-
 
 	sign = 0;
 	m->c_num = count_num(n);
@@ -67,7 +102,7 @@ void	pf_putnbr(long long n, t_mdfrs *m)
 	do_width(m, 'R');
 	if (!p && m->pr == -1)
 		(sign) ? write(1, &sign, 1) : 1;
-	if (m->pr != -1 || (n  == INT64_MIN && !
+	if (m->pr != -1 || (n == INT64_MIN && !
 			(ft_strchr(m->flag, '0')) && (sign = '-')))
 		(sign) ? write(1, &sign, 1) : 1;
 	(m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
@@ -86,7 +121,7 @@ void	u_pf_putnbr(unsigned long long n, t_mdfrs *m)
 	{
 		if ((m->pr == -2 || m->pr == 0))
 			m->pr = 0;
-		else if (m->pr > m->c_num )
+		else if (m->pr > m->c_num)
 			(m->pr -= m->c_num);
 		else
 			m->pr = 0;
@@ -136,11 +171,11 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 	char					*ptr;
 	int						base;
 
-	if (m->spec != 'o' && m->spec != 'O' && m->spec != 'p' &&
-	num == 0 && (ptr = ft_strchr(m->flag, '#')))
+	if ((m->spec == 'o' || m->spec == 'O' || m->spec != 'p') &&
+	m->pr != -2 && m->pr != 0 && num == 0 && (ptr = ft_strchr(m->flag, '#')))
 		*ptr = 'z';
-	(m->spec == 'X' || m->spec == 'x' || m->spec == 'p') ? (base = 16) : 1;
-	(m->spec == 'o' || m->spec == 'O') ? (base = 8) : 1;
+	(m->spec == 'o' || m->spec == 'O') ? (base = 8) :
+		(base = 16);
 	(m->spec == 'X') ? (int_list = "0123456789ABCDEF") :
 		(int_list = "0123456789abcdef");
 	ptr = &buffer[49];
@@ -151,13 +186,12 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 		num /= base;
 	if ((m->pr == -2 || m->pr == 0) && *ptr == '0' && (ptr = ""))
 		m->c_num = 0;
-	((m->spec == 'o' || m->spec == 'O' || m->spec == 'X' || m->spec == 'x') &&
-		(m->c_num < m->pr) && (m->pr = m->pr - m->c_num)) ?
+	((m->c_num < m->pr) && (m->pr = m->pr - m->c_num)) ?
 		(m->c_num += m->pr) : (m->pr -= m->c_num);
-	(ft_strchr(m->flag, '#') && m->pr <= 0) ? do_hash(m, 0) : 1;
+	(m->spec == 'p' || (ft_strchr(m->flag, '#') && m->pr <= 0)) ? do_hash(m, 0) : 1;
 	(ft_strchr(m->flag, '#') && m->pr <= 0 && ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
 	do_width(m, 'R');
-	(ft_strchr(m->flag, '#') && m->pr <= 0 && !ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
+	(m->spec == 'p' || (ft_strchr(m->flag, '#') && m->pr <= 0 && !ft_strchr(m->flag, '0'))) ? do_hash(m, 1) : 1;
 	((m->spec == 'o' || m->spec == 'O' || m->spec == 'X' || m->spec == 'x')
 		&& m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	ft_putstr(ptr);
