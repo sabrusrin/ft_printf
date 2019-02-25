@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 22:42:39 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/25 01:33:39 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/25 21:21:44 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ size_t		spec_exe(char *spec, va_list ap, t_mdfrs *mods)
 		l_pf_putstr(va_arg(ap, int*), mods);
 	if (*spec == 'x' || *spec == 'X' || *spec == 'o' || *spec == 'O')
 		x_type_parse(ap, mods);
-	if (*spec == '%')
-		pf_putchar('%', mods);
+	if (!SPCFR(*spec))
+		pf_putchar(*spec, mods);
 	if (*spec == 'p')
 		(pf_base(va_arg(ap, long int), mods));
 	return (mods->c_num);
@@ -117,8 +117,8 @@ size_t		parse(const char *format, va_list ap)
 		str++;
 		if (!(*(str = parse_modifier(str, &mods))))
 			return (i);
-		if (!(ALLSHT(*str)))
-			continue;
+//		if (!(ALLSHT(*str)))
+//			continue;
 		if (*str == 'n' && (count = va_arg(ap, int*)))
 			*count = i;
 		i += spec_exe(str, ap, &mods);

@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 19:10:04 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/25 02:48:12 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/25 22:48:09 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ void	l_pf_putstr(int *s, t_mdfrs *m)
 		while (*tmp++)
 			m->c_num++;
 		if ((!m->pr || m->pr == -2) ? (m->pr = -2) : 0)
+		{
 			s = 0;
+			m->c_num = 0;
+		}
 		else if (m->pr > 0 && (m->pr < m->c_num))
 		{
 			tmp = malloc(m->pr + 1);
@@ -80,7 +83,7 @@ void	l_pf_putstr(int *s, t_mdfrs *m)
 	}
 	save = m->c_num;
 	do_width(m, 'R');
-	(s == 0) ? ft_putstr("(null)") : (m->c_num = l_ft_putstr(s));
+	(s == 0 && m->pr) ? ft_putstr("(null)") : (m->c_num = l_ft_putstr(s));
 	do_width(m, 'L');
 	(m->pr > 0 && *s && (m->pr < save)) ? free(tmp) : 1;
 }
@@ -167,18 +170,21 @@ void	pf_putdbl(long double d, t_mdfrs *m)
 void	pf_base(uintmax_t num, t_mdfrs *m)
 {
 	char					*int_list;
-	char					buffer[50];
+	char					buff[50];
 	char					*ptr;
 	int						base;
 
-	if ((m->spec == 'o' || m->spec == 'O' || m->spec != 'p') &&
-	m->pr != -2 && m->pr != 0 && num == 0 && (ptr = ft_strchr(m->flag, '#')))
+	if ((m->spec == 'o' || m->spec == 'O') && (m->pr > 0 ||
+	(m->pr != -2 && m->pr != 0 && num == 0)) && (ptr = ft_strchr(m->flag, '#')))
+		*ptr = 'z';
+	else if ((m->spec == 'x' || m->spec == 'X')
+	&& num == 0 && (ptr = ft_strchr(m->flag, '#')))
 		*ptr = 'z';
 	(m->spec == 'o' || m->spec == 'O') ? (base = 8) :
 		(base = 16);
 	(m->spec == 'X') ? (int_list = "0123456789ABCDEF") :
 		(int_list = "0123456789abcdef");
-	ptr = &buffer[49];
+	ptr = &buff[49];
 	*ptr = '\0';
 	if (!num && ++m->c_num)
 		ptr = "0";
@@ -188,10 +194,10 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 		m->c_num = 0;
 	((m->c_num < m->pr) && (m->pr = m->pr - m->c_num)) ?
 		(m->c_num += m->pr) : (m->pr -= m->c_num);
-	(m->spec == 'p' || (ft_strchr(m->flag, '#') && m->pr <= 0)) ? do_hash(m, 0) : 1;
-	(ft_strchr(m->flag, '#') && m->pr <= 0 && ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
+	(m->spec == 'p' || (ft_strchr(m->flag, '#'))) ? do_hash(m, 0) : 1;
+	(ft_strchr(m->flag, '#') && ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
 	do_width(m, 'R');
-	(m->spec == 'p' || (ft_strchr(m->flag, '#') && m->pr <= 0 && !ft_strchr(m->flag, '0'))) ? do_hash(m, 1) : 1;
+	(m->spec == 'p' || (ft_strchr(m->flag, '#') && !ft_strchr(m->flag, '0'))) ? do_hash(m, 1) : 1;
 	((m->spec == 'o' || m->spec == 'O' || m->spec == 'X' || m->spec == 'x')
 		&& m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	ft_putstr(ptr);
