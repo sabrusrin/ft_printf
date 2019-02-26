@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/23 22:42:17 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/25 22:43:30 by chermist         ###   ########.fr       */
+/*   Created: 2019/02/26 22:39:18 by chermist          #+#    #+#             */
+/*   Updated: 2019/02/27 00:50:14 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +25,7 @@ int		main(void)
 	char *st = "Umnozheniye串€";
 	float t = 3.14;
 	unsigned long l;
+	int i = 0;
 
 	setlocale(LC_ALL, "ru_RU.UTF-8");
 	 //short int		s = 23458;
@@ -102,24 +102,22 @@ int		main(void)
 //	ft_printf("@main_ftprintf: %####0000 33..1..#00d\n", 256);
 //	printf("\n@main_ftprintf: %####0000 33..1..#00d\n", 256);
 
-	ft_putnbr(ft_printf("\n{%30S}\n", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B"));
-	ft_putnbr(printf("\n{%30S}\n", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B"));
+	ft_putnbr(ft_printf("\n[%+s]\n", 0));
+	ft_putnbr(printf("\n[%+s]\n", 0));
 //	ft_putnbr(ft_printf("\n%#.O\n", 0));
 //	ft_putnbr(printf("\n%#.O\n", 0));
 //	ft_putnbr(ft_printf("\n%#.x, %#.0x\n", 0, 0));
 //	ft_putnbr(printf("\n%#.x, %#.0x\n", 0, 0));
 	ft_putnbr(ft_printf("\n{%05.S}\n", L"42 c est cool"));
 	ft_putnbr(printf("\n{%05.S}\n", L"42 c est cool"));
-	ft_putnbr(ft_printf("\n{%05s}\n", 0));
-	ft_putnbr(printf("\n{%05s}\n", 0));
-	ft_putnbr(ft_printf("\n{%05.Z}\n", 0));
-	ft_putnbr(printf("\n{%05Z}\n", 0));
+	ft_putnbr(ft_printf("\n{%05.s}\n", 0));
+	ft_putnbr(printf("\n{%05.s}\n", 0));
 //	ft_putnbr(ft_printf("\n{%#.5x}\n", 1));
 //	ft_putnbr(printf("\n{%#.5x}\n", 1));
 //	ft_putnbr(ft_printf("\n%#.o, %#.0o\n", 0, 0));
 //	ft_putnbr(printf("\n%#.o, %#.0o\n", 0, 0));
 	ft_putnbr(ft_printf("\n{%05.S}\n", 0));
 	ft_putnbr(printf("\n{%05.S}\n", 0));
-	ft_putnbr(ft_printf("\n%#.3o\n", 1));
-	ft_putnbr(printf("\n%#.3o\n", 1));
+	ft_putnbr(ft_printf("\n%4.15S\n", L"我是一只猫。"));
+	ft_putnbr(printf("\n%4.15S\n", L"我是一只猫。"));
 }

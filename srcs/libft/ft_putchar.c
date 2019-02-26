@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 15:00:30 by lkarlon-          #+#    #+#             */
-/*   Updated: 2019/02/24 20:30:03 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/27 01:14:56 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	l_ft_putchar(int c)
 		write(1, &c, 1);
 		return (1);
 	}
-	else if (c <= 255)
+	if (c < 2048)
 	{
 		a = ((c >> 6) | 0xC0);
 		write(1, &a, 1);
-		a = ((c & 0x3F) | 0x80);
+		a = ((c & 63) | 0x80);
 		write(1, &a, 1);
 		return (2);
 	}
@@ -44,15 +44,7 @@ int	more_bytes_putchar(int c)
 	int a;
 
 	a = 0;
-	if (c < 2048)
-	{
-		a = ((c >> 6) | 0xC0);
-		write(1, &a, 1);
-		a = ((c & 63) | 0x80);
-		write(1, &a, 1);
-		return (2);
-	}
-	else if (c < 65536)
+	if (c < 65536)
 	{
 		a = ((c >> 12) | 0xE0);
 		write(1, &a, 1);
@@ -75,4 +67,17 @@ int	more_bytes_putchar(int c)
 		return (4);
 	}
 	return (-1);
+}
+
+int	count_utf_bytes(int c)
+{
+	if (c < 256)
+		return (1);
+	else if (c < 2048)
+		return (2);
+	else if (c < 65536)
+		return (3);
+	else if (c < 2097152)
+		return (4);
+	return (0);
 }

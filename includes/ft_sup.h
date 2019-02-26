@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/24 20:30:40 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/27 01:15:08 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ int				u_count_num(unsigned long long i);
 int				more_bytes_putchar(int c);
 void			l_pf_putstr(int *s, t_mdfrs *m);
 int				l_ft_putstr(int *s);
+int				count_utf_bytes(int c);
 
 #endif

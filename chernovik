@@ -95,3 +95,27 @@ int				ft_putchar(int c)
 	}
 	return (ft_putchar_tool_one(c));
 }
+
+
+f (!pf_is_modifier(str[*i]))
+		return (0);
+	if (str[*i] == 'l')
+	{
+		if (str[*i + 1] == 'l' && ++(*i))
+			m = LL;
+		else
+			m = L;
+	}
+	else if (str[*i] == 'h')
+	{
+		if (str[*i + 1] == 'h' && ++(*i))
+			m = HH;
+		else
+			m = H;
+	}
+	else if (str[*i] == 'j')
+		m = J;
+	else if (str[*i] == 'z')
+		m = Z;
+	p->modifier = m;
+	return ((*i)++ & 0);

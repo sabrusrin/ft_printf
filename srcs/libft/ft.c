@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/24 20:23:00 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/26 22:39:14 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int		l_ft_putstr(int *s)
 		return (0);
 	while (*s)
 	{
-	//	printf("\nnumber: %d\n", (*s)); //
 		count += l_ft_putchar(*s);
 		s++;
 	}

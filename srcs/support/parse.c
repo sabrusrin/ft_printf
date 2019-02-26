@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 22:42:39 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/25 21:21:44 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/26 22:39:42 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,48 @@
 
 void		save_mdfr(char **str, t_mdfrs *m)
 {
-	int		save;
-	int		current;
-	if (m->modifier[0] && (*(*str)) != 'D' && (*(*str)) != 'U')
-	{
-		while (MDFR(*(*str)))
-		{
-			(*str)++;
-			if ((*(*str)) == 'D' && (*(*str)) == 'U')
-				break ;
-			return ;
-		}
-	}
-	if (**str == 'l' && (*(*str + 1) == 'l') && (*str += 2) && (current = 4))
-		ft_memcpy(m->modifier, "ll", 2);
+	int        save;
+    int        current;
+    if (m->modifier[0] && (*(*str)) != 'D' && (*(*str)) != 'U')
+    {
+        while (MDFR(*(*str)))
+        {
+            (*str)++;
+            if ((*(*str)) == 'D' && (*(*str)) == 'U')
+                break ;
+            return ;
+        }
+    }
+    if (**str == 'l' && (*(*str + 1) == 'l') && (*str += 2) && (current = 4))
+        ft_memcpy(m->modifier, "ll", 2);
+    else if (**str == 'h' && (*(*str + 1) == 'h') && (*str += 2) && (current = 1))
+        ft_memcpy(m->modifier, "hh", 2);
+    else
+    {
+        current = (*(*str) == 'l') ? 3 : 2;
+        m->modifier[0] = *(*str)++;
+        m->modifier[1] = 0;
+    }
+    save = current;
+
+	/* static int		save = 0;
+	int				current;
+	current = 0;
+	if (**str == 'z' && (current = 6) && (*str += 1))
+		(current > save) ? ft_memcpy(m->modifier, "z", 1) : NULL;
+	else if (**str == 'j' && (current = 5) && (*str += 1))
+		(current > save) ? ft_memcpy(m->modifier, "j", 1) : NULL;
+	else if (**str == 'l' && (*(*str + 1) == 'l') && (*str += 2) && (current = 4))
+		(current > save) ? ft_memcpy(m->modifier, "ll", 2) : NULL;
+	else if (**str == 'l' && (current = 3) && (*str += 1))
+		(current > save) ? ft_memcpy(m->modifier, "l", 1) : NULL;
 	else if (**str == 'h' && (*(*str + 1) == 'h') && (*str += 2) && (current = 1))
-		ft_memcpy(m->modifier, "hh", 2);
-	else
-	{
-		current = (*(*str) == 'l') ? 3 : 2;
-		m->modifier[0] = *(*str)++;
+		(current > save) ? ft_memcpy(m->modifier, "hh", 2) : NULL;
+	else if (**str == 'h' && (current = 2) && (*str += 1))
+		(current > save) ? ft_memcpy(m->modifier, "h", 1) : NULL;
+	if (current != 1 && current != 4)
 		m->modifier[1] = 0;
-	}
-	save = current;
+	save = (save > current) ? save : current; */
 }
 
 char		*parse_modifier(char *str, t_mdfrs *mods)
@@ -47,20 +66,18 @@ char		*parse_modifier(char *str, t_mdfrs *mods)
 	j = 0;
 	while (FLAGS(*str) || MDFR(*str) || ft_isdigit(*str) || *str == '.')
 	{
-		while (FLAGS(*str) && (j < 5) && !(mods->flag[j + 1] = 0))
+		while (FLAGS(*str) && !(mods->flag[j + 1] = 0))
 		{
-			if (!(ft_strchr(mods->flag, *str)))
-				mods->flag[j++] = *str++;
-			else
-				str++;
+			if (j >= 5 && str++)
+				break;
+			if (!(ft_strchr(mods->flag, *str++)))
+				mods->flag[j++] = *(str - 1);
 			if (!(*str))
 				return (str);
 		}
-		while (ft_isdigit(*str))
-			mods->width = (mods->width * 10) + (*str++ - '0');
-		if (*str == '.' && mods->pr >= 0)
-			str++;
-		else if (*str == '.' && (mods->pr-- && ft_isdigit(*(str + 1)) ?
+		while (ft_isdigit(*str) && (*(str - 1)))
+				mods->width = (mods->width * 10) + (*str++ - '0');
+		if (*str == '.' && ((mods->pr = -2) && ft_isdigit(*(str + 1)) ?
 				!(mods->pr = 0) : !(*str++)))
 			while (ft_isdigit(*++str))
 				mods->pr = (mods->pr * 10) + (*str - '0');
@@ -117,8 +134,6 @@ size_t		parse(const char *format, va_list ap)
 		str++;
 		if (!(*(str = parse_modifier(str, &mods))))
 			return (i);
-//		if (!(ALLSHT(*str)))
-//			continue;
 		if (*str == 'n' && (count = va_arg(ap, int*)))
 			*count = i;
 		i += spec_exe(str, ap, &mods);

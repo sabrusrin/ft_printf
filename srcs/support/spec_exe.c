@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 19:10:04 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/25 22:48:09 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/27 01:15:01 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,40 +30,11 @@ void	pf_putchar(int c, t_mdfrs *m)
 void	pf_putstr(char *s, t_mdfrs *m)
 {
 	char	*tmp;
+	int		save;
 
+	((s == 0 && (m->pr == -1 || m->pr > 0)) ? (s = "(null)") : 0);
 	tmp = s;
-	if ((s == NULL) ? (s = "(null)") : 0)
-		m->c_num = 6;
-	else if (*s)
-	{
-		while (*tmp++)
-			m->c_num++;
-		if ((!m->pr || m->pr == -2) ? (m->pr = -2) : 0)
-			s = 0;
-		else if (m->pr > 0 && (m->pr < m->c_num))
-		{
-			tmp = malloc(m->pr + 1);
-			tmp[m->pr] = 0;
-			ft_memcpy(tmp, s, m->pr);
-			s = tmp;
-			m->c_num = m->pr;
-		}
-	}
-	do_width(m, 'R');
-	ft_putstr(s);
-	do_width(m, 'L');
-	(*s && m->pr > 0 && (m->pr < m->c_num)) ? free(tmp) : 1;
-}
-
-void	l_pf_putstr(int *s, t_mdfrs *m)
-{
-	int	*tmp;
-	int	save;
-
-	tmp = s;
-	if ((s == 0) ? !(s = 0) : 0)
-		m->c_num = 6;
-	else if (*s)
+	if (s != 0)
 	{
 		while (*tmp++)
 			m->c_num++;
@@ -83,9 +54,42 @@ void	l_pf_putstr(int *s, t_mdfrs *m)
 	}
 	save = m->c_num;
 	do_width(m, 'R');
-	(s == 0 && m->pr) ? ft_putstr("(null)") : (m->c_num = l_ft_putstr(s));
+	(s != 0) ? ft_putstr(s) : 0;
 	do_width(m, 'L');
-	(m->pr > 0 && *s && (m->pr < save)) ? free(tmp) : 1;
+	(m->pr > 0 && s != 0 && (m->pr < save)) ? free(tmp) : 1;
+}
+
+void	l_pf_putstr(int *s, t_mdfrs *m)
+{
+	int	*tmp;
+	int	save;
+
+	((s == 0 && (m->pr == -1 || m->pr > 0)) ? (s = L"(null)") : 0);
+	tmp = s;
+	if (s != 0)
+	{
+		while (*tmp)
+			m->c_num += count_utf_bytes(*tmp++);
+		tmp = s;
+		if ((!m->pr || m->pr == -2) ? (m->pr = -2) : 0)
+		{
+			s = 0;
+			m->c_num = 0;
+		}
+		else if (m->pr > 0 && (m->pr < m->c_num))
+		{
+			tmp = malloc(m->pr + 1);
+			tmp[m->pr] = 0;
+			ft_memcpy(tmp, s, m->pr);
+			s = tmp;
+			m->c_num = m->pr;
+		}
+	}
+	save = m->c_num;
+	do_width(m, 'R');
+	(s != 0) ? l_ft_putstr(s) : 0;
+	do_width(m, 'L');
+	(m->pr > 0 && s != 0 && (m->pr < save)) ? free(tmp) : 1;
 }
 
 void	pf_putnbr(long long n, t_mdfrs *m)
@@ -195,9 +199,9 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 	((m->c_num < m->pr) && (m->pr = m->pr - m->c_num)) ?
 		(m->c_num += m->pr) : (m->pr -= m->c_num);
 	(m->spec == 'p' || (ft_strchr(m->flag, '#'))) ? do_hash(m, 0) : 1;
-	(ft_strchr(m->flag, '#') && ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
+	((m->spec == 'p' || ft_strchr(m->flag, '#')) && ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
 	do_width(m, 'R');
-	(m->spec == 'p' || (ft_strchr(m->flag, '#') && !ft_strchr(m->flag, '0'))) ? do_hash(m, 1) : 1;
+	((m->spec == 'p' || ft_strchr(m->flag, '#')) && !ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
 	((m->spec == 'o' || m->spec == 'O' || m->spec == 'X' || m->spec == 'x')
 		&& m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	ft_putstr(ptr);
