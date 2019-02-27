@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assist.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:07:47 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/25 00:57:27 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/27 22:32:50 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ void	clean_mods(t_mdfrs *m)
 	int i;
 
 	i = -1;
-	while (++i < 6)
+	while (++i < 7)
 		m->flag[i] = '|';
 	m->c_num = 0;
-	m->modifier[0] = 0;
-	m->modifier[1] = 0;
+	m->modifier = 0;
 	m->width = 0;
 	m->pr = -1;
 	m->spec = 0;

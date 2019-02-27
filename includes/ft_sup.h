@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 19:13:19 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/27 01:15:08 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/27 22:08:47 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@
 typedef struct	s_mdfrs
 {
 	char		*pbuffer;
-	char		flag[6];
-	char		modifier[2];
+	char		flag[7];
+	int			modifier;
 	int			width;
 	int			pr;
 	char		spec;
 	int			c_num;
 }				t_mdfrs;
 
+size_t			spec_exe(char *spec, va_list ap, t_mdfrs *mods);
 void			pf_putchar(int c, t_mdfrs *m);
 void			pf_putstr(char	*s, t_mdfrs *m);
 void			pf_putnbr(long long n, t_mdfrs *m);
@@ -39,7 +40,6 @@ void			do_preci(t_mdfrs *m, long double dpart, char c);
 void			nbr_preci(t_mdfrs *m, long long *n, char *sign);
 void			nbr_sign(t_mdfrs *m, char *sign, long long *n, char *p);
 void			type_parse(va_list ap, t_mdfrs *m, char flag);
-//void			save_mdfr(char *str, t_mdfrs *m);
 void			clean_mods(t_mdfrs *m);
 int				count_num(long long i);
 void			*ft_memcpy(void *dst, const void *src, size_t n);

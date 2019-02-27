@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags_exe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkarlon- <lkarlon-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 22:19:55 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/25 01:58:44 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/27 16:45:58 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,3 @@ void	nbr_sign(t_mdfrs *m, char *sign, long long *n, char *p)
 	ft_strchr(m->flag, ' ') && *n >= 0 && (*sign = ' '))
 		(m->c_num)++;
 }
-

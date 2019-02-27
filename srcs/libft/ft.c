@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 18:21:50 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/26 22:39:14 by chermist         ###   ########.fr       */
+/*   Updated: 2019/02/27 23:02:27 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,6 @@ char	*ft_strchr(const char *s, int c)
 		s++;
 	}
 	return (NULL);
-}
-
-int		ft_putstr(char const *s)
-{
-	int count;
-	int final;
-
-	count = 0;
-	final = 0;
-	if (!s)
-		return (0);
-	while (*s)
-	{
-		count = ft_putchar((int)*s);
-		s += count;
-		final += count;
-	}
-	return (final);
-}
-
-int		l_ft_putstr(int *s)
-{
-	int count;
-
-	count = 0;
-	if (!s)
-		return (0);
-	while (*s)
-	{
-		count += l_ft_putchar(*s);
-		s++;
-	}
-	return (count);
 }
 
 void	ft_putnbr(long long n)
@@ -97,4 +64,17 @@ void	u_ft_putnbr(unsigned long long n)
 	}
 	ft_putnbr(n / 10);
 	ft_putchar((n % 10) + '0');
+}
+
+int		count_utf_bytes(int c)
+{
+	if (c < 256)
+		return (1);
+	else if (c < 2048)
+		return (2);
+	else if (c < 65536)
+		return (3);
+	else if (c < 2097152)
+		return (4);
+	return (0);
 }

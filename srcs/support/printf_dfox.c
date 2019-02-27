@@ -1,96 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spec_exe.c                                         :+:      :+:    :+:   */
+/*   dfoX_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/16 19:10:04 by chermist          #+#    #+#             */
-/*   Updated: 2019/02/27 01:15:01 by chermist         ###   ########.fr       */
+/*   Created: 2019/02/27 20:58:06 by chermist          #+#    #+#             */
+/*   Updated: 2019/02/27 21:18:12 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../../includes/ft_sup.h"
-
-void	pf_putchar(int c, t_mdfrs *m)
-{
-	int a;
-
-	m->c_num++;
-	do_width(m, 'R');
-	if (m->spec == 'c' && m->modifier[0] != 'l')
-		a = ft_putchar(c);
-	else
-		a = l_ft_putchar(c);
-	do_width(m, 'L');
-	m->c_num += a - 1;
-}
-
-void	pf_putstr(char *s, t_mdfrs *m)
-{
-	char	*tmp;
-	int		save;
-
-	((s == 0 && (m->pr == -1 || m->pr > 0)) ? (s = "(null)") : 0);
-	tmp = s;
-	if (s != 0)
-	{
-		while (*tmp++)
-			m->c_num++;
-		if ((!m->pr || m->pr == -2) ? (m->pr = -2) : 0)
-		{
-			s = 0;
-			m->c_num = 0;
-		}
-		else if (m->pr > 0 && (m->pr < m->c_num))
-		{
-			tmp = malloc(m->pr + 1);
-			tmp[m->pr] = 0;
-			ft_memcpy(tmp, s, m->pr);
-			s = tmp;
-			m->c_num = m->pr;
-		}
-	}
-	save = m->c_num;
-	do_width(m, 'R');
-	(s != 0) ? ft_putstr(s) : 0;
-	do_width(m, 'L');
-	(m->pr > 0 && s != 0 && (m->pr < save)) ? free(tmp) : 1;
-}
-
-void	l_pf_putstr(int *s, t_mdfrs *m)
-{
-	int	*tmp;
-	int	save;
-
-	((s == 0 && (m->pr == -1 || m->pr > 0)) ? (s = L"(null)") : 0);
-	tmp = s;
-	if (s != 0)
-	{
-		while (*tmp)
-			m->c_num += count_utf_bytes(*tmp++);
-		tmp = s;
-		if ((!m->pr || m->pr == -2) ? (m->pr = -2) : 0)
-		{
-			s = 0;
-			m->c_num = 0;
-		}
-		else if (m->pr > 0 && (m->pr < m->c_num))
-		{
-			tmp = malloc(m->pr + 1);
-			tmp[m->pr] = 0;
-			ft_memcpy(tmp, s, m->pr);
-			s = tmp;
-			m->c_num = m->pr;
-		}
-	}
-	save = m->c_num;
-	do_width(m, 'R');
-	(s != 0) ? l_ft_putstr(s) : 0;
-	do_width(m, 'L');
-	(m->pr > 0 && s != 0 && (m->pr < save)) ? free(tmp) : 1;
-}
 
 void	pf_putnbr(long long n, t_mdfrs *m)
 {
@@ -171,6 +91,23 @@ void	pf_putdbl(long double d, t_mdfrs *m)
 	do_width(m, 'L');
 }
 
+void	sup_base(uintmax_t *num, t_mdfrs *m, int *base, char **int_list)
+{
+	char *ptr;
+
+	if ((m->spec == 'o' || m->spec == 'O') && (m->pr > 0 ||
+	(m->pr != -2 && m->pr != 0 && *num == 0)) &&
+	(ptr = ft_strchr(m->flag, '#')))
+		*ptr = 'z';
+	else if ((m->spec == 'x' || m->spec == 'X')
+	&& *num == 0 && (ptr = ft_strchr(m->flag, '#')))
+		*ptr = 'z';
+	(m->spec == 'o' || m->spec == 'O') ? (*base = 8) :
+		(*base = 16);
+	(m->spec == 'X') ? (*int_list = "0123456789ABCDEF") :
+		(*int_list = "0123456789abcdef");
+}
+
 void	pf_base(uintmax_t num, t_mdfrs *m)
 {
 	char					*int_list;
@@ -178,16 +115,7 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 	char					*ptr;
 	int						base;
 
-	if ((m->spec == 'o' || m->spec == 'O') && (m->pr > 0 ||
-	(m->pr != -2 && m->pr != 0 && num == 0)) && (ptr = ft_strchr(m->flag, '#')))
-		*ptr = 'z';
-	else if ((m->spec == 'x' || m->spec == 'X')
-	&& num == 0 && (ptr = ft_strchr(m->flag, '#')))
-		*ptr = 'z';
-	(m->spec == 'o' || m->spec == 'O') ? (base = 8) :
-		(base = 16);
-	(m->spec == 'X') ? (int_list = "0123456789ABCDEF") :
-		(int_list = "0123456789abcdef");
+	sup_base(&num, m, &base, &int_list);
 	ptr = &buff[49];
 	*ptr = '\0';
 	if (!num && ++m->c_num)
@@ -199,11 +127,12 @@ void	pf_base(uintmax_t num, t_mdfrs *m)
 	((m->c_num < m->pr) && (m->pr = m->pr - m->c_num)) ?
 		(m->c_num += m->pr) : (m->pr -= m->c_num);
 	(m->spec == 'p' || (ft_strchr(m->flag, '#'))) ? do_hash(m, 0) : 1;
-	((m->spec == 'p' || ft_strchr(m->flag, '#')) && ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
+	((m->spec == 'p' || ft_strchr(m->flag, '#')) &&
+	ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
 	do_width(m, 'R');
-	((m->spec == 'p' || ft_strchr(m->flag, '#')) && !ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
-	((m->spec == 'o' || m->spec == 'O' || m->spec == 'X' || m->spec == 'x')
-		&& m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
+	((m->spec == 'p' || ft_strchr(m->flag, '#')) &&
+	!ft_strchr(m->flag, '0')) ? do_hash(m, 1) : 1;
+	(m->spec != 'p' && m->pr > 0) ? do_preci(m, 1.1, 'o') : 1;
 	ft_putstr(ptr);
 	do_width(m, 'L');
 }
