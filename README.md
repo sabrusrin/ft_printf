@@ -6,7 +6,7 @@ Fully works with types diDuUcCoOxXpSs, f and F in progres
 
 Use make to compile libftprintf.a
 
-##Usage  
+## Usage
 To use libftprintf.a library with your program add #include "libft.h" to your header file and compile like this:  
   gcc your_program.c -I./includes -L./ -lftprintf
 
