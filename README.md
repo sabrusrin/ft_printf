@@ -1,6 +1,6 @@
 # ft_printf
 ### Re-implementation of stdio printf.
-#### my nickname - chermist
+#### my 42 nickname - chermist
 
 Fully works with types diDuUcCoOxXpSs, f and F in progres
 
