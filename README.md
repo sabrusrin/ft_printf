@@ -1,5 +1,5 @@
 # ft_printf
-## Re-implementation of stdio printf.
+### Re-implementation of stdio printf.
 
 Fully works with types diDuUcCoOxXpSs, f and F in progres
 
