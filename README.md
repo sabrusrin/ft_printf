@@ -1,6 +1,7 @@
 # ft_printf
 ### Re-implementation of stdio printf.
 #### my 42 nickname - chermist
+> Code written in norminette code style(github.com/sabrusrin/norme)
 
 Fully works with types diDuUcCoOxXpSs, f and F in progres
 
