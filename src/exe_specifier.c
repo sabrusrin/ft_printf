@@ -6,7 +6,7 @@
 /*   By: chermist <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 23:06:47 by chermist          #+#    #+#             */
-/*   Updated: 2019/11/24 22:13:02 by chermist         ###   ########.fr       */
+/*   Updated: 2019/12/06 21:19:59 by chermist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	exe_int(va_list ap, char type, t_pf *sup, t_vec *buf)
 		putnbr_buf(sup, buf, itoa_buf((intmax_t)va_arg(ap, ssize_t), nbuf));
 	else if (sup->length == 64)
 		putnbr_buf(sup, buf, itoa_buf(va_arg(ap, intmax_t), nbuf));
- 	else if (sup->length == 128)
+	else if (sup->length == 128)
 		putnbr_buf(sup, buf, itoa_buf(va_arg(ap, __PTRDIFF_TYPE__), nbuf));
 	ft_vdel(&nbuf);
 }
@@ -76,6 +76,10 @@ void	exe_unsigned(va_list ap, char type, t_pf *sup, t_vec *buf)
 {
 	t_vec	*nbuf;
 
+	if (sup->flags & PLUS)
+		sup->flags ^= PLUS;
+	if (sup->flags & SPACE)
+		sup->flags ^= SPACE;
 	nbuf = ft_vnew(30, sizeof(char));
 	if ((type == 'u' && sup->length == 4) || type == 'U')
 		putnbr_buf(sup, buf, uitoa_buf(va_arg(ap, unsigned long), nbuf));

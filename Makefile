@@ -6,7 +6,7 @@
 #    By: chermist <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/27 22:25:22 by chermist          #+#    #+#              #
-#    Updated: 2019/11/25 16:23:15 by chermist         ###   ########.fr        #
+#    Updated: 2019/12/07 00:17:58 by chermist         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ STR_F = ft_strlen.c \
 		ft_strjoin.c \
 		ft_strtrim.c \
 		ft_strsplit.c \
-		ft_wcount.c
+		ft_wcount.c \
+		get_next_line.c
 
 CHR_F = ft_atoi.c \
 		ft_atoi_move.c \
@@ -111,8 +112,6 @@ Q_F   = ft_qnew.c \
 		ft_qclear.c \
 		ft_qdel.c
 
-MY_F  = get_next_line.c
-
 PRINTF = ft_printf.c \
 		parse.c \
 		exe_specifier.c \
@@ -136,13 +135,12 @@ vpath %.c libft/char
 vpath %.c libft/print
 vpath %.c libft/utils
 vpath %.c libft/lst
-vpath %.c libft/myfunc
 vpath %.c libft/math
 vpath %.c libft/vector
 vpath %.c libft/queue
-vpath %.c ft_printf
+vpath %.c src
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -Ofast
 
 all: $(NAME)
 
@@ -151,7 +149,7 @@ $(NAME): $(OBJ)
 		ranlib $(NAME)
 
 %.o: %.c
-	@gcc $(FLAGS) $(INC) -c $< -o $@
+	clang $(FLAGS) $(INC) -c $< -o $@
 
 
 clean:
