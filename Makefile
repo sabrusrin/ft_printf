@@ -6,7 +6,7 @@
 #    By: chermist <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/27 22:25:22 by chermist          #+#    #+#              #
-#    Updated: 2019/12/07 00:17:58 by chermist         ###   ########.fr        #
+#    Updated: 2019/12/07 15:26:03 by chermist         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,7 +125,7 @@ PRINTF = ft_printf.c \
 SRCS =	$(MEM_F) $(STR_F) $(CHR_F) $(PUT_F) $(LST_F) \
 		$(MY_F) $(MATH_F) $(VEC_F) $(MY_F) $(Q_F) $(PRINTF)
 
-INC = -I./includes
+INC = -I./libft/includes -I./inc
 
 OBJ = $(SRCS:%.c=%.o)
 
@@ -145,17 +145,20 @@ FLAGS = -Wall -Wextra -Werror -Ofast
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		ar rc $(NAME) $(OBJ)
-		ranlib $(NAME)
+		@ar rc $(NAME) $(OBJ)
+		@ranlib $(NAME)
+		@echo "\033[1;32mlibftprintf.a was built\033[0m"
 
 %.o: %.c
-	clang $(FLAGS) $(INC) -c $< -o $@
+	@clang $(FLAGS) $(INC) -c $< -o $@
 
 
 clean:
-		rm -f $(OBJ)
+		@rm -f $(OBJ)
+		@echo "\033[3;36mObject files cleaned\033[0m"
 
 fclean: clean
-		rm -f $(NAME)
+		@rm -f $(NAME)
+		@echo "\033[3;36mProject fully cleaned\033[0m"
 
 re: fclean all
