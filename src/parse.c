@@ -104,7 +104,7 @@ void	parse_width_preci(va_list ap, char **str, t_pf *sup)
 			sup->preci = sup->wild;
 		}
 	}
-	while ((**str == '.' || isdigit(**str)) && ++*str)
+	while ((**str == '.' || ft_isdigit(**str)) && ++*str)
 		sup->preci = -2;
 	if (**str && IS_FLAG(**str))
 		parse_flags(str, sup);

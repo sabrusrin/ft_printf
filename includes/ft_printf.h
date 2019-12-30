@@ -18,6 +18,7 @@
 # include <stdarg.h>
 # include <stddef.h>
 # include <wchar.h>
+# include <stdint.h>
 # include "libft.h"
 
 # define IS_FLAG(x) (ft_memchr("#0- +'", x, 6))
